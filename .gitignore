@@ -8,7 +8,6 @@ client/.pnp
 
 # testing
 client/coverage
-server/config/default.json
 
 # production
 client/build

@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
-const config = require('config');
 const debug = require('debug')('ticketer-backend:server');
-const db = config.get('mongoURI');
+const db = process.env.MONG_URI
 
 const connectDB = async () => {
   try {

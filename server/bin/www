@@ -6,6 +6,7 @@
 const app = require('../app');
 const debug = require('debug')('ticketer-backend:server');
 const http = require('http');
+const connectDB = require('../config/db');
 
 /**
  * Get port from environment and store in Express.
@@ -22,9 +23,16 @@ const server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+// Connect Database
+connectDB()
+  .then(() => {
+    server.listen(port);
+    server.on('error', onError);
+    server.on('listening', onListening);
+  }).catch(err => {
+    console.error(err.message);
+    process.exit(1);
+  });
 
 /**
  * Normalize a port into a number, string, or false.
