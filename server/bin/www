@@ -4,9 +4,13 @@
  * Module dependencies.
  */
 const app = require('../app');
-const debug = require('debug')('ticketer-backend:server');
+const debug = require('debug')('ticketer:server');
 const http = require('http');
-const connectDB = require('../config/db');
+
+const path = require('path');
+require('dotenv').config({path: path.resolve(__dirname, '../.env.local')});
+
+const connectDB = require('../db');
 
 /**
  * Get port from environment and store in Express.
