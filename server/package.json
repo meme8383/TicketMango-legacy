@@ -1,0 +1,25 @@
+{
+  "name": "ticketer-backend",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "app": "nodemon ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "config": "^3.3.9",
+    "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
+    "debug": "^4.3.4",
+    "ejs": "3.1.7",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "mongoose": "^7.1.0",
+    "morgan": "~1.9.1",
+    "sass": "^1.62.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
