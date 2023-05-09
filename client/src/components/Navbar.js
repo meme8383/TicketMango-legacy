@@ -1,4 +1,6 @@
-import { Link } from 'react-router-dom'
+import { Container, Navbar as BootBar, Nav, Button } from 'react-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap'
+
 import { useLogout } from '../hooks/useLogout'
 import { useAuthContext } from '../hooks/useAuthContext'
 
@@ -11,27 +13,34 @@ const Navbar = () => {
   }
 
   return (
-    <header>
-      <div className="container">
-        <Link to="/">
-          <h1>Workout Buddy</h1>
-        </Link>
-        <nav>
-          {user && (
-            <div>
-              <span>{user.email}</span>
-              <button onClick={handleClick}>Log out</button>
-            </div>
-          )}
-          {!user && (
-            <div>
-              <Link to="/login">Login</Link>
-              <Link to="/signup">Signup</Link>
-            </div>
-          )}
-        </nav>
-      </div>
-    </header>
+    <BootBar bg="light" expand="md">
+      <Container>
+        <LinkContainer to="/">
+          <BootBar.Brand>Ticketer</BootBar.Brand>
+        </LinkContainer>
+        <BootBar.Toggle aria-controls="basic-navbar-nav" />
+        <BootBar.Collapse className="justify-content-end">
+          <Nav>
+            {user && (
+              <>
+                <BootBar.Text>{user.email}</BootBar.Text>
+                <Button onClick={handleClick}>Log out</Button>
+              </>
+            )}
+            {!user && (
+              <>
+                <LinkContainer to="/login">
+                  <Nav.Link>Login</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to="/signup">
+                  <Nav.Link>Register</Nav.Link>
+                </LinkContainer>
+              </>
+            )}
+          </Nav>
+        </BootBar.Collapse>
+      </Container>
+    </BootBar>
   )
 }
 

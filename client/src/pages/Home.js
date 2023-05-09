@@ -1,40 +1,23 @@
-import { useEffect } from 'react'
-import { useEventsContext } from '../hooks/useEventsContext'
-import { useAuthContext } from '../hooks/useAuthContext'
-
-// components
-import EventDetails from '../components/EventDetails'
-import EventForm from '../components/EventForm'
+import { Button, Container } from 'react-bootstrap'
 
 const Home = () => {
-  const { events, dispatch } = useEventsContext()
-  const { user } = useAuthContext()
-
-  useEffect(() => {
-    const fetchEvents = async () => {
-      const response = await fetch('/api/events', {
-        headers: { 'Authorization': `Bearer ${user.token}` },
-      })
-      const json = await response.json()
-
-      if (response.ok) {
-        dispatch({ type: 'SET_EVENTS', payload: json })
-      }
-    }
-
-    if (user) {
-      fetchEvents()
-    }
-  }, [dispatch, user])
 
   return (
     <div className="home">
-      <div className="events">
-        {events && events.map((event) => (
-          <EventDetails key={event._id} event={event} />
-        ))}
-      </div>
-      <EventForm />
+      <Container>
+          <div className="px-4 py-5 my-5 text-center">
+            <h1 className="display-5 fw-bold">Ticketer</h1>
+            <div className="col-lg-6 mx-auto">
+              <h2 className="display-6 mb-4">A ticketer</h2>
+              <div
+                className="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
+                <Button variant="primary btn-lg px-4 me-sm-3">New Event</Button>
+                <Button
+                  variant="outline-secondary btn-lg px-4">Dashboard</Button>
+              </div>
+            </div>
+          </div>
+      </Container>
     </div>
   )
 }
