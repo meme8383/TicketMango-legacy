@@ -4,10 +4,14 @@ const {
   getEvent,
   createEvent,
   deleteEvent,
-  updateEvent
+  updateEvent,
 } = require('../controllers/eventController')
+const requireAuth = require('../middleware/requireAuth')
 
 const router = express.Router()
+
+// middleware
+router.use(requireAuth)
 
 // GET all events
 router.get('/', getEvents)

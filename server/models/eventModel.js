@@ -5,21 +5,25 @@ const Schema = mongoose.Schema
 const eventSchema = new Schema({
   title: {
     type: String,
-    required: true
+    required: true,
   },
   date: {
     type: Date,
-    required: true
+    required: true,
   },
   location: {
-    type: String
+    type: String,
   },
   description: {
-    type: String
+    type: String,
   },
   maxParticipants: {
-    type: Number
-  }
+    type: Number,
+  },
+  user_id: {
+    type: String,
+    required: true,
+  },
 }, { timestamps: true })
 
 module.exports = mongoose.model('Event', eventSchema)
