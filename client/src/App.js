@@ -18,13 +18,16 @@ function App () {
         <div className="pages">
           <Routes>
             <Route
-              path="/"
+              index
               element={user ? <Navigate to="/dashboard"/> : <Home />}
             />
             <Route
               path="/dashboard"
               element={user ? <Dashboard /> : <Navigate to="/login" />}
-            />
+            >
+              <Route index element={<Dashboard />} />
+              <Route path="*" element={<Navigate to="/dashboard" />} />
+            </Route>
             <Route
               path="/login"
               element={!user ? <Login /> : <Navigate to="/" />}

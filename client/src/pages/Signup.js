@@ -1,37 +1,160 @@
 import { useState } from 'react'
 import { useSignup } from '../hooks/useSignup'
+import { Container, Form, Button, Alert, Row, Col } from 'react-bootstrap'
+import validator from 'validator'
 
 const Signup = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+
+  const [passwordsMatch, setPasswordsMatch] = useState(false)
+  const [confirmError, setConfirmError] = useState('')
+
+  const [strongPassword, setStrongPassword] = useState(false)
+  const [passwordError, setPasswordError] = useState('')
+
+  const [emailValid, setEmailValid] = useState(false)
+  const [emailError, setEmailError] = useState('')
+
+  const [show, setShow] = useState(true)
   const { signup, error, isLoading } = useSignup()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
+    if (!emailValid || !strongPassword || !passwordsMatch) {
+      return
+    }
+
     await signup(email, password)
+    setShow(true)
+  }
+
+  const handleEmail = (email) => {
+    if (!validator.isEmail(email)) {
+      setEmailError('Please enter a valid email address')
+    } else {
+      setEmailError('')
+      setEmailValid(true)
+    }
+    setEmail(email)
+  }
+
+  const handlePassword = (pass) => {
+
+    const lowerCase = /[a-z]/
+    const upperCase = /[A-Z]/
+    const number = /[0-9]/
+
+    if (pass.length < 8) {
+      setPasswordError('Password must be at least 8 characters long')
+    } else if (!pass.match(lowerCase)) {
+      setPasswordError('Password must contain at least one lowercase letter')
+    } else if (!pass.match(upperCase)) {
+      setPasswordError('Password must contain at least one uppercase letter')
+    } else if (!pass.match(number)) {
+      setPasswordError('Password must contain at least one number')
+    } else {
+      setPasswordError('')
+      setStrongPassword(true)
+    }
+
+    setPassword(pass)
+    if (confirmPassword || passwordsMatch) {
+      if (confirmPassword !== pass) {
+        setConfirmError('Passwords do not match')
+        setPasswordsMatch(false)
+      } else {
+        setConfirmError('')
+        setPasswordsMatch(true)
+      }
+    }
+  }
+
+  const handleConfirmPassword = (pass) => {
+
+    if (pass !== password) {
+      setConfirmError('Passwords do not match')
+    } else {
+      setConfirmError('')
+      setPasswordsMatch(true)
+    }
+
+    setConfirmPassword(pass)
   }
 
   return (
-    <form className="signup" onSubmit={handleSubmit}>
-      <h3>Sign Up</h3>
+    <Container>
+      <Row className="justify-content-md-center">
+        <Col md={{ span: 5 }}>
+          <Form
+            onSubmit={handleSubmit}
+            noValidate>
+            <h3>Sign Up</h3>
 
-      <label>Email address:</label>
-      <input
-        type="email"
-        onChange={(e) => setEmail(e.target.value)}
-        value={email}
-      />
-      <label>Password:</label>
-      <input
-        type="password"
-        onChange={(e) => setPassword(e.target.value)}
-        value={password}
-      />
+            <Form.Group className="mb-3" controlId="email">
+              <Form.Label>Email address:</Form.Label>
+              <Form.Control
+                type="email"
+                onChange={(e) => handleEmail(e.target.value)}
+                value={email}
+                placeholder="example@email.com"
+                required
+                isInvalid={!!emailError}
+                isValid={emailValid}
+              />
+              <Form.Control.Feedback
+                type="invalid">{emailError}</Form.Control.Feedback>
+            </Form.Group>
 
-      <button disabled={isLoading}>Sign up</button>
-      {error && <div className="error">{error}</div>}
-    </form>
+            <Form.Group className="mb-3" controlId="password">
+              <Form.Label>Password:</Form.Label>
+              <Form.Control
+                type="password"
+                onChange={(e) => {
+                  handlePassword(e.target.value)
+                }}
+                value={password}
+                placeholder="Password"
+                required
+                isInvalid={!!passwordError}
+                isValid={strongPassword}
+              />
+              <Form.Control.Feedback
+                type="invalid">{passwordError}</Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="confirmPassword">
+              <Form.Label>Confirm Password:</Form.Label>
+              <Form.Control
+                type="password"
+                onChange={(e) => {
+                  handleConfirmPassword(e.target.value)
+                }}
+                value={confirmPassword}
+                placeholder="Password"
+                required
+                isInvalid={!!confirmError}
+                isValid={passwordsMatch}
+              />
+              <Form.Control.Feedback
+                type="invalid">{confirmError}</Form.Control.Feedback>
+            </Form.Group>
+
+            <Button className="mb-3" variant="primary" type="submit"
+                    disabled={!!isLoading}>
+              Sign Up
+            </Button>
+
+            {(error && show) &&
+              <Alert variant="danger" onClose={() => setShow(false)}
+                     dismissible>{error}</Alert>}
+
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   )
 }
 

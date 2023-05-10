@@ -13,7 +13,7 @@ const Navbar = () => {
   }
 
   return (
-    <BootBar bg="light" expand="md">
+    <BootBar bg="light" expand="md" className="mb-3">
       <Container>
         <LinkContainer to="/">
           <BootBar.Brand>Ticketer</BootBar.Brand>
