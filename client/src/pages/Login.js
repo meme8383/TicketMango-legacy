@@ -94,7 +94,7 @@ const Login = () => {
             </Form.Group>
 
             <Button className="mb-3" variant="primary" type="submit"
-                    disabled={isLoading}>
+                    disabled={!!isLoading}>
               Log in
             </Button>
             {(errorMessage && show) &&
