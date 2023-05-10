@@ -1,24 +1,58 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useLogin } from '../hooks/useLogin'
 import { Container, Form, Button, Alert, Row, Col } from 'react-bootstrap'
 
 const Login = () => {
   const [email, setEmail] = useState('')
+  const [emailError, setEmailError] = useState('')
+
   const [password, setPassword] = useState('')
-  const [rememberMe, setRememberMe] = useState(false)
+  const [passwordError, setPasswordError] = useState('')
+
   const [show, setShow] = useState(true)
   const { login, error, isLoading } = useLogin()
+  const [errorMessage, setErrorMessage] = useState('')
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    if (e.currentTarget.checkValidity() === false) {
-      e.stopPropagation()
+    setEmailError('')
+    setPasswordError('')
+
+    if (!email || !password) {
+      if (!email) {
+        setEmailError('Please enter your email')
+      }
+      if (!password) {
+        setPasswordError('Please enter your password')
+      }
     }
 
-    await login(email, password, rememberMe)
+    await login(email, password)
     setShow(true)
   }
+
+  useEffect(() => {
+    switch (error) {
+      case null:
+      case '':
+        setErrorMessage('')
+        break;
+      case 'EMAIL_NOTFOUND':
+        setErrorMessage('Email not found. Please register or use a different email.')
+        setEmailError('Email not found.')
+        break;
+      case 'INCORRECT_PASSWORD':
+        setErrorMessage('Incorrect password. Please try again.')
+        setPasswordError('Incorrect password.')
+        break;
+      case 'EMPTY_FIELD':
+        setErrorMessage('Please fill out all fields.')
+        break;
+      default:
+        setErrorMessage('Something went wrong. Please try again.')
+    }
+  })
 
   return (
     <Container>
@@ -37,8 +71,11 @@ const Login = () => {
                 value={email}
                 placeholder="example@email.com"
                 required
-                isInvalid={error === "Incorrect email"}
+                isInvalid={!!emailError}
               />
+              <Form.Control.Feedback type="invalid">
+                {emailError}
+              </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="password">
@@ -49,27 +86,21 @@ const Login = () => {
                 value={password}
                 placeholder="Password"
                 required
-                isInvalid={error === "Incorrect password"}
+                isInvalid={!!passwordError}
               />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="rememberMe">
-              <Form.Check
-                type="checkbox"
-                label="Remember me"
-                value={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
-              />
+              <Form.Control.Feedback type="invalid">
+                {passwordError}
+              </Form.Control.Feedback>
             </Form.Group>
 
             <Button className="mb-3" variant="primary" type="submit"
                     disabled={isLoading}>
               Log in
             </Button>
-            {(error && show) &&
+            {(errorMessage && show) &&
               <Alert variant="danger" onClose={() => setShow(false)}
                      dismissible>
-                <p>{error}</p>
+                <p>{errorMessage}</p>
               </Alert>}
           </Form>
         </Col>

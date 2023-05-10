@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSignup } from '../hooks/useSignup'
 import { Container, Form, Button, Alert, Row, Col } from 'react-bootstrap'
 import validator from 'validator'
@@ -19,6 +19,7 @@ const Signup = () => {
 
   const [show, setShow] = useState(true)
   const { signup, error, isLoading } = useSignup()
+  const [errorMessage, setErrorMessage] = useState('')
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -84,6 +85,35 @@ const Signup = () => {
     setConfirmPassword(pass)
   }
 
+  useEffect(() => {
+    switch (error) {
+      case null:
+      case '':
+        setErrorMessage('')
+        break;
+      case 'EMAIL_INUSE':
+        setErrorMessage('Email already in use. Please login instead.')
+        setEmailError('Email already in use')
+        setEmailValid(false)
+        break;
+      case 'INVALID_EMAIL':
+        setErrorMessage('Invalid email')
+        setEmailError('Please enter a valid email address')
+        setEmailValid(false)
+        break;
+      case 'WEAK_PASSWORD':
+        setErrorMessage('Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, and one number')
+        setPasswordError('Please enter a stronger password.')
+        setStrongPassword(false)
+        break;
+      case 'EMPTY_FIELD':
+        setErrorMessage('Please fill out all fields.')
+        break;
+      default:
+        setErrorMessage('Something went wrong. Please try again.')
+    }
+  })
+
   return (
     <Container>
       <Row className="justify-content-md-center">
@@ -147,9 +177,9 @@ const Signup = () => {
               Sign Up
             </Button>
 
-            {(error && show) &&
+            {(errorMessage && show) &&
               <Alert variant="danger" onClose={() => setShow(false)}
-                     dismissible>{error}</Alert>}
+                     dismissible>{errorMessage}</Alert>}
 
           </Form>
         </Col>

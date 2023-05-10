@@ -23,7 +23,7 @@ const Navbar = () => {
           <Nav>
             {user && (
               <>
-                <BootBar.Text>{user.email}</BootBar.Text>
+                <BootBar.Text className="mx-3">{user.email}</BootBar.Text>
                 <Button onClick={handleClick}>Log out</Button>
               </>
             )}
