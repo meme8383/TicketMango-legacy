@@ -6,7 +6,11 @@ import Home from './pages/Home'
 import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
+import NotFound from './pages/NotFound'
+
 import Navbar from './components/Navbar'
+import EventList from './components/EventList'
+import NewEvent from './pages/NewEvent'
 
 function App () {
   const { user } = useAuthContext()
@@ -19,23 +23,27 @@ function App () {
           <Routes>
             <Route
               index
-              element={user ? <Navigate to="/dashboard"/> : <Home />}
+              element={user ? <Navigate to="/dashboard" /> : <Home />}
             />
             <Route
-              path="/dashboard"
+              path="dashboard"
               element={user ? <Dashboard /> : <Navigate to="/login" />}
             >
-              <Route index element={<Dashboard />} />
-              <Route path="*" element={<Navigate to="/dashboard" />} />
+              <Route path="" element={<EventList />} />
+            </Route>
+            <Route path="events">
+              <Route path="new" element={<NewEvent />} />
+              <Route path=":eventId" element={<EventList />} />
             </Route>
             <Route
-              path="/login"
+              path="login"
               element={!user ? <Login /> : <Navigate to="/" />}
             />
             <Route
-              path="/signup"
+              path="signup"
               element={!user ? <Signup /> : <Navigate to="/" />}
             />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
       </BrowserRouter>
