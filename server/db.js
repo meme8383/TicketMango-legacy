@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const debug = require('debug')('ticketer:server');
+const debug = require('debug')('ticketmango:server');
 const db = process.env.MONGO_URI
 
 const connectDB = async () => {

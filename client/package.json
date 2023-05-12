@@ -1,6 +1,6 @@
 {
   "proxy": "http://localhost:8082",
-  "name": "ticketer",
+  "name": "ticketmango",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

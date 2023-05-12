@@ -4,11 +4,11 @@
  * Module dependencies.
  */
 const app = require('../app')
-const debug = require('debug')('ticketer:server')
-const http = require('http')
-
 const path = require('path')
 require('dotenv').config({ path: path.resolve(__dirname, '../.env.local') })
+
+const debug = require('debug')('ticketmango:server')
+const http = require('http')
 
 const connectDB = require('../db')
 
@@ -94,5 +94,6 @@ function onListening () {
   const bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port
+  console.log("here")
   debug('Listening on ' + bind)
 }

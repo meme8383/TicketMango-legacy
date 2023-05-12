@@ -1,9 +1,9 @@
 {
-  "name": "ticketer-backend",
+  "name": "ticketmango-backend",
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "DEBUG=ticketmango:* node ./bin/www",
     "app": "nodemon ./bin/www"
   },
   "dependencies": {

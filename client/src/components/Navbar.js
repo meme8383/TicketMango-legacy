@@ -16,7 +16,7 @@ const Navbar = () => {
     <BootBar bg="light" expand="md" className="mb-3">
       <Container>
         <LinkContainer to="/">
-          <BootBar.Brand>Ticketer</BootBar.Brand>
+          <BootBar.Brand>TicketMango</BootBar.Brand>
         </LinkContainer>
         <BootBar.Toggle aria-controls="basic-navbar-nav" />
         <BootBar.Collapse className="justify-content-end">

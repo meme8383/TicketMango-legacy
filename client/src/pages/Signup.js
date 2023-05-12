@@ -18,8 +18,9 @@ const Signup = () => {
   const [emailError, setEmailError] = useState('')
 
   const [show, setShow] = useState(true)
-  const { signup, error, isLoading } = useSignup()
   const [errorMessage, setErrorMessage] = useState('')
+
+  const { signup, error, isLoading } = useSignup()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
