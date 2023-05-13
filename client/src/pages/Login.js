@@ -52,7 +52,7 @@ const Login = () => {
       default:
         setErrorMessage('Something went wrong. Please try again.')
     }
-  })
+  }, [error])
 
   return (
     <Container>

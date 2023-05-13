@@ -113,7 +113,7 @@ const Signup = () => {
       default:
         setErrorMessage('Something went wrong. Please try again.')
     }
-  })
+  }, [error])
 
   return (
     <Container>
