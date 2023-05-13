@@ -1,6 +1,14 @@
 import { useEffect, useState } from 'react'
 import { useSignup } from '../hooks/useSignup'
-import { Container, Form, Button, Alert, Row, Col } from 'react-bootstrap'
+import {
+  Container,
+  Form,
+  Button,
+  Alert,
+  Row,
+  Col,
+  Spinner,
+} from 'react-bootstrap'
 import validator from 'validator'
 
 const Signup = () => {
@@ -177,6 +185,7 @@ const Signup = () => {
                     disabled={!!isLoading}>
               Sign Up
             </Button>
+            {!!isLoading && <Spinner />}
 
             {(errorMessage && show) &&
               <Alert variant="danger" onClose={() => setShow(false)}

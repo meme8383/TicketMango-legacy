@@ -4,7 +4,7 @@ import { useAuthContext } from '../hooks/useAuthContext'
 
 // components
 import EventDetails from './EventDetails'
-import { Container } from 'react-bootstrap'
+import { Container, Spinner } from 'react-bootstrap'
 
 const EventList = () => {
   const { events, dispatch } = useEventsContext()
@@ -30,12 +30,12 @@ const EventList = () => {
   return (
     <div className="events">
       <Container>
-      <h3>My events</h3>
-      {events && events.map((event) => (
-        <EventDetails key={event._id} event={event} />
-      ))}
-      {events &&
-        <p>It's quiet here. <a href="/events/new">Create a new event?</a></p>}
+        <h3>My events</h3>
+        {events ? events.length > 0 ? events.map((event) => (
+          <EventDetails key={event._id} event={event} />
+        ))
+          : <p>It's quiet here. <a href="/events/new">Create a new event?</a>
+        </p> : <Spinner animation="border" />}
       </Container>
     </div>
   )

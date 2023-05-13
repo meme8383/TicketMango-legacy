@@ -32,9 +32,7 @@ const Navbar = () => {
                 <LinkContainer to="/login">
                   <Nav.Link>Login</Nav.Link>
                 </LinkContainer>
-                <LinkContainer to="/signup">
-                  <Nav.Link>Register</Nav.Link>
-                </LinkContainer>
+                <Button href="/signup">Register</Button>
               </>
             )}
           </Nav>

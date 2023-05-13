@@ -1,6 +1,14 @@
 import { useEffect, useState } from 'react'
 import { useLogin } from '../hooks/useLogin'
-import { Container, Form, Button, Alert, Row, Col } from 'react-bootstrap'
+import {
+  Container,
+  Form,
+  Button,
+  Alert,
+  Row,
+  Col,
+  Spinner,
+} from 'react-bootstrap'
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -97,6 +105,7 @@ const Login = () => {
                     disabled={!!isLoading}>
               Log in
             </Button>
+            {!!isLoading && <Spinner />}
             {(errorMessage && show) &&
               <Alert variant="danger" onClose={() => setShow(false)}
                      dismissible>

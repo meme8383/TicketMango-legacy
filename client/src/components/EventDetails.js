@@ -30,7 +30,7 @@ const EventDetails = ({ event }) => {
     <div className="event-details">
       <h4>{event.title}</h4>
       <p><strong>Desc: </strong>{event.description}</p>
-      <p><strong>Date: </strong>{event.date}</p>
+      <p><strong>Date: </strong>{formatDistanceToNow(new Date(event.date), { addSuffix: true })}</p>
       <p><strong>Location: </strong>{event.location}</p>
       <p><strong>Max Participants: </strong>{event.maxParticipants}</p>
       <p>{formatDistanceToNow(new Date(event.createdAt), { addSuffix: true })}</p>
