@@ -1,5 +1,5 @@
 {
-  "proxy": "ticketmangoapi.herokuapp.com",
+  "proxy": "https://ticketmangoapi.herokuapp.com",
   "name": "ticketmango",
   "version": "0.1.0",
   "private": true,
