@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "DEBUG=ticketmango:* node ./bin/www",
-    "app": "nodemon ./bin/www"
+    "app": "DEBUG=ticketmango:* nodemon ./bin/www"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",

@@ -11,7 +11,7 @@ const Home = () => {
               <h2 className="display-6 mb-4">A ticketing app</h2>
               <div
                 className="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
-                <Button variant="primary btn-lg px-4 me-sm-3" href="/dashboard/new">New Event</Button>
+                <Button variant="primary btn-lg px-4 me-sm-3" href="/events/new">New Event</Button>
                 <Button
                   variant="outline-secondary btn-lg px-4" href="/dashboard">Dashboard</Button>
               </div>
