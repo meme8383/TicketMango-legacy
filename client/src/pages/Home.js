@@ -1,4 +1,5 @@
 import { Button, Container } from 'react-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap'
 
 const Home = () => {
 
@@ -11,9 +12,16 @@ const Home = () => {
               <h2 className="display-6 mb-4">A ticketing app</h2>
               <div
                 className="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
-                <Button variant="primary btn-lg px-4 me-sm-3" href="/events/new">New Event</Button>
+                <LinkContainer to="/events/new">
+                <Button variant="primary btn-lg px-4 me-sm-3">New Event</Button>
+                </LinkContainer>
+                <LinkContainer to="/dashboard">
                 <Button
-                  variant="outline-secondary btn-lg px-4" href="/dashboard">Dashboard</Button>
+                  variant="outline-secondary btn-lg px-4"
+                  href="/dashboard">
+                  Dashboard
+                </Button>
+                </LinkContainer>
               </div>
             </div>
           </div>
