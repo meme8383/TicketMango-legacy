@@ -42,7 +42,12 @@ const Signup = () => {
     e.preventDefault()
 
     if (!emailValid || !strongPassword || !passwordsMatch || !firstNameValid || !lastNameValid) {
-      return
+      handleFirstName(firstName);
+      handleLastName(lastName);
+      handleEmail(email);
+      handlePassword(password);
+      handleConfirmPassword(confirmPassword)
+      return;
     }
 
     await signup(email, password, firstName, lastName)

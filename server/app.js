@@ -1,4 +1,3 @@
-const createError = require('http-errors')
 const express = require('express')
 const path = require('path')
 const cookieParser = require('cookie-parser')
@@ -18,23 +17,16 @@ app.use('/api/events', eventRouter)
 
 app.use('/api/user', userRouter)
 
-app.use(express.static(path.join(__dirname, 'public')))
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname + '/public/index.html'))
+app.use(express.static(path.join(__dirname, '../client/build')))
+app.get("*", function(_, res) {
+  res.sendFile(
+    path.join(__dirname, "../client/build/index.html"),
+    function (err) {
+      if(err) {
+        res.status(500).send(err)
+      }
+    }
+  )
 })
-
-// catch 404 and forward to error handler
-// app.use((req, res, next) => {
-//   next(createError(404))
-// })
-
-// error handler
-// app.use((err, req, res, next) => {
-//   // set locals, only providing error in development
-//   res.locals.message = err.message;
-//   res.locals.error = req.app.get('env') === 'development' ? err : {};
-//
-//   res.status(err.status || 500);
-// });
 
 module.exports = app
