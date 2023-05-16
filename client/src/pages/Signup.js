@@ -25,6 +25,14 @@ const Signup = () => {
   const [emailValid, setEmailValid] = useState(false)
   const [emailError, setEmailError] = useState('')
 
+  const [firstName, setFirstName] = useState('')
+  const [firstNameValid, setFirstNameValid] = useState(false)
+  const [firstNameError, setFirstNameError] = useState('')
+
+  const [lastName, setLastName] = useState('')
+  const [lastNameValid, setLastNameValid] = useState(false)
+  const [lastNameError, setLastNameError] = useState('')
+
   const [show, setShow] = useState(true)
   const [errorMessage, setErrorMessage] = useState('')
 
@@ -33,12 +41,32 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    if (!emailValid || !strongPassword || !passwordsMatch) {
+    if (!emailValid || !strongPassword || !passwordsMatch || !firstNameValid || !lastNameValid) {
       return
     }
 
-    await signup(email, password)
+    await signup(email, password, firstName, lastName)
     setShow(true)
+  }
+
+  const handleFirstName = (name) => {
+    if (name.length < 2) {
+      setFirstNameError('Please enter your first name')
+    } else {
+      setFirstNameError('')
+      setFirstNameValid(true)
+    }
+    setFirstName(name)
+  }
+
+  const handleLastName = (name) => {
+    if (name.length < 2) {
+      setLastNameError('Please enter your last name')
+    } else {
+      setLastNameError('')
+      setLastNameValid(true)
+    }
+    setLastName(name)
   }
 
   const handleEmail = (email) => {
@@ -131,6 +159,37 @@ const Signup = () => {
             onSubmit={handleSubmit}
             noValidate>
             <h3>Sign Up</h3>
+
+            {/*Add form groups for first and last name here*/}
+            <Form.Group className="mb-3" controlId="firstName">
+              <Form.Label>First Name:</Form.Label>
+              <Form.Control
+                type="text"
+                onChange={(e) => handleFirstName(e.target.value)}
+                value={firstName}
+                placeholder="First Name"
+                required
+                isInvalid={!!firstNameError}
+                isValid={firstNameValid}
+              />
+              <Form.Control.Feedback
+                type="invalid">{firstNameError}</Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="lastName">
+              <Form.Label>Last Name:</Form.Label>
+              <Form.Control
+                type="text"
+                onChange={(e) => handleLastName(e.target.value)}
+                value={lastName}
+                placeholder="Last Name"
+                required
+                isInvalid={!!lastNameError}
+                isValid={lastNameValid}
+              />
+              <Form.Control.Feedback
+                type="invalid">{lastNameError}</Form.Control.Feedback>
+            </Form.Group>
 
             <Form.Group className="mb-3" controlId="email">
               <Form.Label>Email address:</Form.Label>
