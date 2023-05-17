@@ -31,6 +31,9 @@
         ]
       }
     ],
-    "arrow-body-style": "off"
+    "arrow-body-style": "off",
+    "consistent-return": "off",
+    "func-names": "off",
+    "no-return-await": "off"
   }
 }
