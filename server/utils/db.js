@@ -6,7 +6,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config({path: path.resolve(__dirname, '../.env.local')})
 }
 
-const db = process.env.MONGO_URI
+const db = process.env.MONGODB_URI
 
 const connectDB = async () => {
   try {
