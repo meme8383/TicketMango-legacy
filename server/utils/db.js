@@ -1,5 +1,11 @@
 const mongoose = require('mongoose');
+const path = require("path");
 const debug = require('debug')('ticketmango:server');
+
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config({path: path.resolve(__dirname, '../.env.local')})
+}
+
 const db = process.env.MONGO_URI
 
 const connectDB = async () => {

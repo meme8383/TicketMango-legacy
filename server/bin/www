@@ -12,7 +12,6 @@ if (process.env.NODE_ENV !== 'production') {
 const debug = require('debug')('ticketmango:server')
 const http = require('http')
 
-const connectDB = require('../db')
 
 /**
  * Get port from environment and store in Express.
@@ -30,14 +29,9 @@ const server = http.createServer(app)
  */
 
 // Connect Database
-connectDB().then(() => {
-  server.listen(port)
-  server.on('error', onError)
-  server.on('listening', onListening)
-}).catch(err => {
-  console.error(err.message)
-  process.exit(1)
-})
+server.listen(port)
+server.on('error', onError)
+server.on('listening', onListening)
 
 /**
  * Normalize a port into a number, string, or false.
