@@ -8,13 +8,7 @@
     "plugin:flowtype/recommended"
   ],
   "parser": "@typescript-eslint/parser",
-  "plugins": [
-    "react",
-    "react-hooks",
-    "import",
-    "jsx-a11y",
-    "flowtype"
-  ],
+  "plugins": ["react", "react-hooks", "import", "jsx-a11y", "flowtype"],
   "ignorePatterns": ["src/components/EventDetails.js"],
   "rules": {
     "react/prop-types": 0,
@@ -26,10 +20,7 @@
       }
     ],
     "linebreak-style": 1,
-    "quotes": [
-      "error",
-      "single"
-    ]
+    "quotes": ["error", "single"]
   },
   "parserOptions": {
     "ecmaVersion": 2021,
