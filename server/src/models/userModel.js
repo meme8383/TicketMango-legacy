@@ -25,7 +25,7 @@ const userSchema = new Schema({
 });
 
 // static signup method
-userSchema.statics.signup = async function (
+userSchema.statics.signup = async function signup(
   email,
   password,
   firstName,
@@ -51,16 +51,17 @@ userSchema.statics.signup = async function (
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(password, salt);
 
-  return await this.create({
+  const user = await this.create({
     email,
     password: hash,
     firstName,
     lastName,
   });
+  return user;
 };
 
 // static login method
-userSchema.statics.login = async function (email, password) {
+userSchema.statics.login = async function login(email, password) {
   if (!email || !password) {
     throw Error('EMPTY_FIELD');
   }

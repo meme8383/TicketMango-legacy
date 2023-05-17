@@ -15,13 +15,15 @@ const getEvent = async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: 'No such event' });
+    res.status(404).json({ error: 'No such event' });
+    return;
   }
 
   const event = await Event.findById(id);
 
   if (!event) {
-    return res.status(404).json({ error: 'No such event' });
+    res.status(404).json({ error: 'No such event' });
+    return;
   }
 
   res.status(200).json(event);
@@ -32,9 +34,8 @@ const createEvent = async (req, res) => {
   const { title, date, location, description, maxParticipants } = req.body;
 
   if (!title || !date) {
-    return res
-      .status(400)
-      .json({ error: 'Please fill in all required fields' });
+    res.status(400).json({ error: 'Please fill in all required fields' });
+    return;
   }
 
   // add doc to db
@@ -59,13 +60,15 @@ const deleteEvent = async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: 'No such event' });
+    res.status(404).json({ error: 'No such event' });
+    return;
   }
 
   const event = await Event.findOneAndDelete({ _id: id });
 
   if (!event) {
-    return res.status(400).json({ error: 'No such event' });
+    res.status(400).json({ error: 'No such event' });
+    return;
   }
 
   res.status(200).json(event);
@@ -76,7 +79,8 @@ const updateEvent = async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: 'No such event' });
+    res.status(404).json({ error: 'No such event' });
+    return;
   }
 
   const event = await Event.findOneAndUpdate(
@@ -87,7 +91,8 @@ const updateEvent = async (req, res) => {
   );
 
   if (!event) {
-    return res.status(400).json({ error: 'No such event' });
+    res.status(400).json({ error: 'No such event' });
+    return;
   }
 
   res.status(200).json(event);
