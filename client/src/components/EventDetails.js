@@ -1,42 +1,59 @@
-import { useEventsContext } from '../hooks/useEventsContext'
-import { useAuthContext } from '../hooks/useAuthContext'
+import React from 'react';
+import { useEventsContext } from '../hooks/useEventsContext';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 // date fns
-import formatDistanceToNow from 'date-fns/formatDistanceToNow'
+import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 
 const EventDetails = ({ event }) => {
-  const { dispatch } = useEventsContext()
-  const { user } = useAuthContext()
+  const { dispatch } = useEventsContext();
+  const { user } = useAuthContext();
 
   const handleClick = async () => {
     if (!user) {
-      return
+      return;
     }
 
     const response = await fetch('/api/events/' + event._id, {
       method: 'DELETE',
       headers: {
-        'Authorization': `Bearer ${user.token}`
-      }
-    })
-    const json = await response.json()
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+    const json = await response.json();
 
     if (response.ok) {
-      dispatch({type: 'DELETE_EVENT', payload: json})
+      dispatch({ type: 'DELETE_EVENT', payload: json });
     }
-  }
+  };
 
   return (
     <div className="event-details">
       <h4>{event.title}</h4>
-      <p><strong>Desc: </strong>{event.description}</p>
-      <p><strong>Date: </strong>{formatDistanceToNow(new Date(event.date), { addSuffix: true })}</p>
-      <p><strong>Location: </strong>{event.location}</p>
-      <p><strong>Max Participants: </strong>{event.maxParticipants}</p>
-      <p>{formatDistanceToNow(new Date(event.createdAt), { addSuffix: true })}</p>
-      <span className="material-symbols-outlined" onClick={handleClick}>delete</span>
+      <p>
+        <strong>Desc: </strong>
+        {event.description}
+      </p>
+      <p>
+        <strong>Date: </strong>
+        {formatDistanceToNow(new Date(event.date), { addSuffix: true })}
+      </p>
+      <p>
+        <strong>Location: </strong>
+        {event.location}
+      </p>
+      <p>
+        <strong>Max Participants: </strong>
+        {event.maxParticipants}
+      </p>
+      <p>
+        {formatDistanceToNow(new Date(event.createdAt), { addSuffix: true })}
+      </p>
+      <span className="material-symbols-outlined" onClick={handleClick}>
+        delete
+      </span>
     </div>
-  )
-}
+  );
+};
 
-export default EventDetails
+export default EventDetails;

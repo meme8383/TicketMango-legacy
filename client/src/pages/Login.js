@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
-import { useLogin } from '../hooks/useLogin'
+import React from 'react';
+import { useEffect, useState } from 'react';
+import { useLogin } from '../hooks/useLogin';
 import {
   Container,
   Form,
@@ -8,67 +9,67 @@ import {
   Row,
   Col,
   Spinner,
-} from 'react-bootstrap'
+} from 'react-bootstrap';
 
 const Login = () => {
-  const [email, setEmail] = useState('')
-  const [emailError, setEmailError] = useState('')
+  const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
 
-  const [password, setPassword] = useState('')
-  const [passwordError, setPasswordError] = useState('')
+  const [password, setPassword] = useState('');
+  const [passwordError, setPasswordError] = useState('');
 
-  const [show, setShow] = useState(true)
-  const { login, error, isLoading } = useLogin()
-  const [errorMessage, setErrorMessage] = useState('')
+  const [show, setShow] = useState(true);
+  const { login, error, isLoading } = useLogin();
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    setEmailError('')
-    setPasswordError('')
+    setEmailError('');
+    setPasswordError('');
 
     if (!email || !password) {
       if (!email) {
-        setEmailError('Please enter your email')
+        setEmailError('Please enter your email');
       }
       if (!password) {
-        setPasswordError('Please enter your password')
+        setPasswordError('Please enter your password');
       }
     }
 
-    await login(email, password)
-    setShow(true)
-  }
+    await login(email, password);
+    setShow(true);
+  };
 
   useEffect(() => {
     switch (error) {
       case null:
       case '':
-        setErrorMessage('')
+        setErrorMessage('');
         break;
       case 'EMAIL_NOTFOUND':
-        setErrorMessage('Email not found. Please register or use a different email.')
-        setEmailError('Email not found.')
+        setErrorMessage(
+          'Email not found. Please register or use a different email.',
+        );
+        setEmailError('Email not found.');
         break;
       case 'INCORRECT_PASSWORD':
-        setErrorMessage('Incorrect password. Please try again.')
-        setPasswordError('Incorrect password.')
+        setErrorMessage('Incorrect password. Please try again.');
+        setPasswordError('Incorrect password.');
         break;
       case 'EMPTY_FIELD':
-        setErrorMessage('Please fill out all fields.')
+        setErrorMessage('Please fill out all fields.');
         break;
       default:
-        setErrorMessage('Something went wrong. Please try again.')
+        setErrorMessage('Something went wrong. Please try again.');
     }
-  }, [error])
+  }, [error]);
 
   return (
     <Container>
       <Row className="justify-content-md-center">
         <Col md={{ span: 5 }}>
-          <Form
-            onSubmit={handleSubmit}
-            noValidate>
+          <Form onSubmit={handleSubmit} noValidate>
             <h3>Log In</h3>
 
             <Form.Group className="mb-3" controlId="email">
@@ -101,21 +102,29 @@ const Login = () => {
               </Form.Control.Feedback>
             </Form.Group>
 
-            <Button className="mb-3" variant="primary" type="submit"
-                    disabled={!!isLoading}>
+            <Button
+              className="mb-3"
+              variant="primary"
+              type="submit"
+              disabled={!!isLoading}
+            >
               Log in
             </Button>
             {!!isLoading && <Spinner />}
-            {(errorMessage && show) &&
-              <Alert variant="danger" onClose={() => setShow(false)}
-                     dismissible>
+            {errorMessage && show && (
+              <Alert
+                variant="danger"
+                onClose={() => setShow(false)}
+                dismissible
+              >
                 <p>{errorMessage}</p>
-              </Alert>}
+              </Alert>
+            )}
           </Form>
         </Col>
       </Row>
     </Container>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

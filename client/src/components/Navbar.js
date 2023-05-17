@@ -1,16 +1,17 @@
-import { Container, Navbar as BootBar, Nav, Button } from 'react-bootstrap'
-import { LinkContainer } from 'react-router-bootstrap'
+import React from 'react';
+import { Container, Navbar as BootBar, Nav, Button } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
-import { useLogout } from '../hooks/useLogout'
-import { useAuthContext } from '../hooks/useAuthContext'
+import { useLogout } from '../hooks/useLogout';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 const Navbar = () => {
-  const { logout } = useLogout()
-  const { user } = useAuthContext()
+  const { logout } = useLogout();
+  const { user } = useAuthContext();
 
   const handleClick = () => {
-    logout()
-  }
+    logout();
+  };
 
   return (
     <BootBar bg="light" expand="md" className="mb-3">
@@ -41,7 +42,7 @@ const Navbar = () => {
         </BootBar.Collapse>
       </Container>
     </BootBar>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

@@ -3,12 +3,7 @@
 /**
  * Module dependencies.
  */
-const app = require('../app')
-const path = require('path')
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config({path: path.resolve(__dirname, '../.env.local')})
-}
-
+const app = require('../src/app')
 const debug = require('debug')('ticketmango:server')
 const http = require('http')
 

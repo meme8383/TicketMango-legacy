@@ -1,12 +1,8 @@
 const mongoose = require('mongoose');
-const path = require("path");
 const debug = require('debug')('ticketmango:server');
+const errlog = require('debug')('ticketmango:error');
 
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config({path: path.resolve(__dirname, '../.env.local')})
-}
-
-const db = process.env.MONGODB_URI
+const db = process.env.MONGODB_URI;
 
 const connectDB = async () => {
   try {
@@ -17,7 +13,7 @@ const connectDB = async () => {
 
     debug('MongoDB is Connected...');
   } catch (err) {
-    console.error(err.message);
+    errlog(err.message);
     process.exit(1);
   }
 };

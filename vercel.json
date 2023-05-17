@@ -1,7 +1,7 @@
 {
   "builds": [
     {
-      "src": "server/app.js",
+      "src": "server/src/app.js",
       "use": "@vercel/node"
     },
     {
@@ -18,7 +18,7 @@
       "headers": {
         "cache-control": "s-maxage=0"
       },
-      "dest": "server/app.js"
+      "dest": "server/src/app.js"
     },
     {
       "src": "/static/(.*)",

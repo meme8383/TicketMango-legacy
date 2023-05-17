@@ -1,6 +1,6 @@
-import React from 'react'
-import { Container } from 'react-bootstrap'
-import EventForm from '../components/EventForm'
+import React from 'react';
+import { Container } from 'react-bootstrap';
+import EventForm from '../components/EventForm';
 
 const NewEvent = () => {
   return (
@@ -8,9 +8,8 @@ const NewEvent = () => {
       <Container>
         <EventForm />
       </Container>
-</div>
-)
+    </div>
+  );
+};
 
-}
-
-export default NewEvent
+export default NewEvent;
