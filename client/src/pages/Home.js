@@ -15,10 +15,7 @@ const Home = () => {
                 <Button variant="primary btn-lg px-4 me-sm-3">New Event</Button>
               </LinkContainer>
               <LinkContainer to="/dashboard">
-                <Button
-                  variant="outline-secondary btn-lg px-4"
-                  href="/dashboard"
-                >
+                <Button variant="outline-secondary btn-lg px-4">
                   Dashboard
                 </Button>
               </LinkContainer>

@@ -21,6 +21,7 @@
     "ejs": "3.1.7",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
+    "if-env": "^1.0.4",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.1.0",
     "morgan": "~1.9.1",
@@ -31,8 +32,8 @@
     "eslint": "^8.40.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.27.5",
-    "prettier": "^2.8.8",
-    "nodemon": "^2.0.22"
+    "nodemon": "^2.0.22",
+    "prettier": "^2.8.8"
   },
   "jest": {
     "testEnvironment": "node",

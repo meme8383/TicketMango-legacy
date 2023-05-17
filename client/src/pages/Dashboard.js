@@ -6,7 +6,6 @@ const Dashboard = () => {
   return (
     <div className="dashboard">
       <Container>
-        {/*Align the dashboard header to the left and add a button aligned to the right*/}
         <Row>
           <Col>
             <h1>Dashboard</h1>

@@ -9,7 +9,6 @@
   ],
   "parser": "@typescript-eslint/parser",
   "plugins": ["react", "react-hooks", "import", "jsx-a11y", "flowtype"],
-  "ignorePatterns": ["src/components/EventDetails.js"],
   "rules": {
     "react/prop-types": 0,
     "indent": [

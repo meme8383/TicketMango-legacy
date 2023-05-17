@@ -4,6 +4,8 @@ import { useAuthContext } from '../hooks/useAuthContext';
 
 // date fns
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
+import { Button, Card } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
 const EventDetails = ({ event }) => {
   const { dispatch } = useEventsContext();
@@ -28,31 +30,49 @@ const EventDetails = ({ event }) => {
   };
 
   return (
-    <div className="event-details">
-      <h4>{event.title}</h4>
-      <p>
-        <strong>Desc: </strong>
-        {event.description}
-      </p>
-      <p>
-        <strong>Date: </strong>
-        {formatDistanceToNow(new Date(event.date), { addSuffix: true })}
-      </p>
-      <p>
-        <strong>Location: </strong>
-        {event.location}
-      </p>
-      <p>
-        <strong>Max Participants: </strong>
-        {event.maxParticipants}
-      </p>
-      <p>
-        {formatDistanceToNow(new Date(event.createdAt), { addSuffix: true })}
-      </p>
-      <span className="material-symbols-outlined" onClick={handleClick}>
-        delete
-      </span>
-    </div>
+    <Card className="event-details m-3">
+      <Card.Body>
+        <Card.Title>{event.title}</Card.Title>
+        <Card.Text>
+          <strong>Date: </strong>
+          {formatDistanceToNow(new Date(event.date), { addSuffix: true })}
+        </Card.Text>
+        {event.description && (
+          <Card.Text>
+            <strong>Description: </strong>
+            {event.description}
+          </Card.Text>
+        )}
+        {event.location && (
+          <Card.Text>
+            <strong>Location: </strong>
+            {event.location}
+          </Card.Text>
+        )}
+        {event.maxParticipants && (
+          <Card.Text>
+            <strong>Max Participants: </strong>
+            {event.maxParticipants}
+          </Card.Text>
+        )}
+        <LinkContainer to={`/events/${event._id}`}>
+          <Button className="m-1" variant="primary">
+            Details
+          </Button>
+        </LinkContainer>
+        <Button className="m-1" variant="danger" onClick={handleClick}>
+          Delete
+        </Button>
+        <Card.Footer>
+          <p>
+            Modified:{' '}
+            {formatDistanceToNow(new Date(event.createdAt), {
+              addSuffix: true,
+            })}
+          </p>
+        </Card.Footer>
+      </Card.Body>
+    </Card>
   );
 };
 
