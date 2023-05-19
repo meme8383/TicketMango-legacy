@@ -5,7 +5,7 @@ import { useAuthContext } from '../hooks/useAuthContext';
 
 // components
 import EventDetails from './EventDetails';
-import { Container, Spinner } from 'react-bootstrap';
+import { Row, Spinner } from 'react-bootstrap';
 
 const EventList = () => {
   const { events, dispatch } = useEventsContext();
@@ -30,23 +30,22 @@ const EventList = () => {
 
   return (
     <div className="events">
-      <Container>
-        <h3>My events</h3>
-        {events ? (
-          events.length > 0 ? (
-            events.map((event) => (
+      <h3>My events</h3>
+      {events ? (
+        events.length > 0 ? (
+          <Row className="container-fluid">
+            {events.map((event) => (
               <EventDetails key={event._id} event={event} />
-            ))
-          ) : (
-            <p>
-              It&apos;s quiet here.{' '}
-              <a href="/events/new">Create a new event?</a>
-            </p>
-          )
+            ))}
+          </Row>
         ) : (
-          <Spinner animation="border" />
-        )}
-      </Container>
+          <p>
+            It&apos;s quiet here. <a href="/events/new">Create a new event?</a>
+          </p>
+        )
+      ) : (
+        <Spinner animation="border" />
+      )}
     </div>
   );
 };

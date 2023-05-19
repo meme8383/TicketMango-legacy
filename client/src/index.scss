@@ -5,3 +5,7 @@ $font-family-base: 'Poppins', sans-serif;
 $primary: #f27a0a;
 
 @import '../node_modules/bootstrap/scss/bootstrap';
+
+.event-details {
+  width: 32rem;
+}

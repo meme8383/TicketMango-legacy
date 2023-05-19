@@ -21,6 +21,9 @@ const EventForm = () => {
   const [date, setDate] = useState('');
   const [dateError, setDateError] = useState('');
 
+  const [time, setTime] = useState('');
+  const [timeError, setTimeError] = useState('');
+
   const [location, setLocation] = useState('');
   const [locationError, setLocationError] = useState('');
 
@@ -42,20 +45,29 @@ const EventForm = () => {
     setDescriptionError('');
     setMaxParticipantsError('');
 
-    if (!title || !date) {
+    if (!title || !date || !time) {
       setErrorMessage('Please fill out all required fields.');
       setShow(true);
       if (!title) {
-        setTitleError('Please enter a title');
+        setTitleError('Please enter a valid title');
       }
       if (!date) {
-        setDateError('Please enter a date');
+        setDateError('Please enter a valid date');
+      }
+      if (!time) {
+        setTimeError('Please enter a valid time');
       }
       setShow(true);
       return;
     }
 
-    await create(title, date, location, description, maxParticipants);
+    await create(
+      title,
+      new Date(date + ' ' + time),
+      location,
+      description,
+      maxParticipants,
+    );
     setShow(true);
   };
 
@@ -98,6 +110,17 @@ const EventForm = () => {
                   onChange={(e) => setDate(e.target.value)}
                   value={date}
                   isInvalid={!!dateError}
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="time">
+                <Form.Label>Time:</Form.Label>
+                <Form.Control
+                  required
+                  type="time"
+                  onChange={(e) => setTime(e.target.value)}
+                  value={time}
+                  isInvalid={!!timeError}
                 />
               </Form.Group>
 
