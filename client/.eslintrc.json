@@ -5,10 +5,18 @@
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
     "plugin:jsx-a11y/recommended",
-    "plugin:flowtype/recommended"
+    "plugin:flowtype/recommended",
+    "plugin:@typescript-eslint/recommended"
   ],
   "parser": "@typescript-eslint/parser",
-  "plugins": ["react", "react-hooks", "import", "jsx-a11y", "flowtype"],
+  "plugins": [
+    "react",
+    "react-hooks",
+    "import",
+    "jsx-a11y",
+    "flowtype",
+    "@typescript-eslint"
+  ],
   "rules": {
     "react/prop-types": 0,
     "indent": [
@@ -36,6 +44,11 @@
   "settings": {
     "react": {
       "version": "detect"
+    },
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
     }
   }
 }

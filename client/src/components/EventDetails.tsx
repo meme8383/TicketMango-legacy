@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
+import Event from '../types/Event';
 
 // date fns
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import { Button, Card, Col, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
-const EventDetails = ({ event }) => {
-  const [copied, setCopied] = useState(false);
+const EventDetails = ({ event }: { event: Event }) => {
+  const [copied, setCopied] = useState<boolean>(false);
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(
@@ -15,7 +16,10 @@ const EventDetails = ({ event }) => {
     setCopied(true);
   };
 
-  const renderTooltip = (props) =>
+  // Any type definition must be used for TooltipProps
+  // as react-bootstrap typescript definitions are broken
+  // eslint-disable-next-line
+  const renderTooltip = (props: any) =>
     copied ? <Tooltip {...props}>Copied!</Tooltip> : <></>;
 
   return (
@@ -39,7 +43,7 @@ const EventDetails = ({ event }) => {
             </Button>
           </LinkContainer>
           <OverlayTrigger
-            trigger="hover"
+            trigger={['hover', 'focus']}
             overlay={renderTooltip}
             placement="top"
           >

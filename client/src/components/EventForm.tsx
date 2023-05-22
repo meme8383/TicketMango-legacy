@@ -15,28 +15,28 @@ import { Navigate } from 'react-router-dom';
 const EventForm = () => {
   const { create, isLoading, error, eventID } = useEvent();
 
-  const [title, setTitle] = useState('');
-  const [titleError, setTitleError] = useState('');
+  const [title, setTitle] = useState<string>('');
+  const [titleError, setTitleError] = useState<string>('');
 
-  const [date, setDate] = useState('');
-  const [dateError, setDateError] = useState('');
+  const [date, setDate] = useState<string>('');
+  const [dateError, setDateError] = useState<string>('');
 
-  const [time, setTime] = useState('');
-  const [timeError, setTimeError] = useState('');
+  const [time, setTime] = useState<string>('');
+  const [timeError, setTimeError] = useState<string>('');
 
-  const [location, setLocation] = useState('');
-  const [locationError, setLocationError] = useState('');
+  const [location, setLocation] = useState<string>('');
+  const [locationError, setLocationError] = useState<string>('');
 
-  const [description, setDescription] = useState('');
-  const [descriptionError, setDescriptionError] = useState('');
+  const [description, setDescription] = useState<string>('');
+  const [descriptionError, setDescriptionError] = useState<string>('');
 
-  const [maxParticipants, setMaxParticipants] = useState('');
-  const [maxParticipantsError, setMaxParticipantsError] = useState('');
+  const [maxParticipants, setMaxParticipants] = useState<string>('');
+  const [maxParticipantsError, setMaxParticipantsError] = useState<string>('');
 
-  const [show, setShow] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [show, setShow] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
     setTitleError('');
@@ -66,7 +66,7 @@ const EventForm = () => {
       new Date(date + ' ' + time),
       location,
       description,
-      maxParticipants,
+      parseInt(maxParticipants),
     );
     setShow(true);
   };

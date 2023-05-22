@@ -6,19 +6,24 @@ export const useEvent = () => {
   const { dispatch } = useEventsContext();
   const { user } = useAuthContext();
 
-  const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(null);
-  const [eventID, setEventID] = useState(null);
+  const [error, setError] = useState<string>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [eventID, setEventID] = useState<number>();
 
   const create = async (
-    title,
-    date,
-    location,
-    description,
-    maxParticipants,
+    title: string,
+    date: Date,
+    location: string,
+    description: string,
+    maxParticipants: number,
   ) => {
     setIsLoading(true);
-    setError(null);
+    setError('');
+
+    if (!user) {
+      setError('You must be logged in to create an event.');
+      return;
+    }
 
     const event = { title, date, location, description, maxParticipants };
 
@@ -36,7 +41,7 @@ export const useEvent = () => {
       setError(json.error);
     }
     if (response.ok) {
-      setError(null);
+      setError('');
       setEventID(json._id);
       dispatch({ type: 'CREATE_EVENT', payload: json });
     }

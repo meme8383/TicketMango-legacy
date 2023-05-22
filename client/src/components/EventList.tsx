@@ -9,10 +9,12 @@ import { Row, Spinner } from 'react-bootstrap';
 
 const EventList = () => {
   const { events, dispatch } = useEventsContext();
-  const { user } = useAuthContext();
+  const { user, dispatch: authDispatch } = useAuthContext();
 
   useEffect(() => {
     const fetchEvents = async () => {
+      if (!user) return;
+
       const response = await fetch('/api/events', {
         headers: { Authorization: `Bearer ${user.token}` },
       });
@@ -20,13 +22,15 @@ const EventList = () => {
 
       if (response.ok) {
         dispatch({ type: 'SET_EVENTS', payload: json });
+      } else if (response.status === 401) {
+        authDispatch({ type: 'LOGOUT' });
       }
     };
 
     if (user) {
       fetchEvents();
     }
-  }, [dispatch, user]);
+  }, [dispatch, user, authDispatch]);
 
   return (
     <div className="events">

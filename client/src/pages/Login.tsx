@@ -22,7 +22,7 @@ const Login = () => {
   const { login, error, isLoading } = useLogin();
   const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
     setEmailError('');
@@ -43,7 +43,7 @@ const Login = () => {
 
   useEffect(() => {
     switch (error) {
-      case null:
+      case undefined:
       case '':
         setErrorMessage('');
         break;

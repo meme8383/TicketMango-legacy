@@ -11,7 +11,7 @@ export const useLogout = () => {
 
     // dispatch logout action
     dispatch({ type: 'LOGOUT' });
-    dispatchEvents({ type: 'SET_EVENTS', payload: null });
+    dispatchEvents({ type: 'SET_EVENTS', payload: [] });
   };
 
   return { logout };

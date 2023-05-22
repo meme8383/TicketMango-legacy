@@ -5,7 +5,9 @@ import App from './App';
 import { EventsContextProvider } from './context/EventContext';
 import { AuthContextProvider } from './context/AuthContext';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement,
+);
 root.render(
   <React.StrictMode>
     <AuthContextProvider>

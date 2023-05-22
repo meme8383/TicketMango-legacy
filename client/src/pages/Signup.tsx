@@ -39,7 +39,7 @@ const Signup = () => {
 
   const { signup, error, isLoading } = useSignup();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
     if (
@@ -54,6 +54,7 @@ const Signup = () => {
       handleEmail(email);
       handlePassword(password);
       handleConfirmPassword(confirmPassword);
+      setErrorMessage('Please resolve all errors before submitting.');
       return;
     }
 
@@ -61,7 +62,7 @@ const Signup = () => {
     setShow(true);
   };
 
-  const handleFirstName = (name) => {
+  const handleFirstName = (name: string) => {
     if (name.length < 2) {
       setFirstNameError('Please enter your first name');
     } else {
@@ -71,7 +72,7 @@ const Signup = () => {
     setFirstName(name);
   };
 
-  const handleLastName = (name) => {
+  const handleLastName = (name: string) => {
     if (name.length < 2) {
       setLastNameError('Please enter your last name');
     } else {
@@ -81,7 +82,7 @@ const Signup = () => {
     setLastName(name);
   };
 
-  const handleEmail = (email) => {
+  const handleEmail = (email: string) => {
     if (!validator.isEmail(email)) {
       setEmailError('Please enter a valid email address');
     } else {
@@ -91,7 +92,7 @@ const Signup = () => {
     setEmail(email);
   };
 
-  const handlePassword = (pass) => {
+  const handlePassword = (pass: string) => {
     const lowerCase = /[a-z]/;
     const upperCase = /[A-Z]/;
     const number = /[0-9]/;
@@ -121,7 +122,7 @@ const Signup = () => {
     }
   };
 
-  const handleConfirmPassword = (pass) => {
+  const handleConfirmPassword = (pass: string) => {
     if (pass !== password) {
       setConfirmError('Passwords do not match');
     } else {
@@ -134,7 +135,7 @@ const Signup = () => {
 
   useEffect(() => {
     switch (error) {
-      case null:
+      case undefined:
       case '':
         setErrorMessage('');
         break;
@@ -259,11 +260,11 @@ const Signup = () => {
               className="mb-3"
               variant="primary"
               type="submit"
-              disabled={!!isLoading}
+              disabled={isLoading}
             >
               Sign Up
             </Button>
-            {!!isLoading && <Spinner />}
+            {isLoading && <Spinner />}
 
             {errorMessage && show && (
               <Alert
