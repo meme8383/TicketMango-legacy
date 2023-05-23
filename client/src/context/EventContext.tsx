@@ -14,10 +14,12 @@ interface EventContextValue extends State {
   dispatch: React.Dispatch<Action>;
 }
 
+// Initialize context as undefined before dispatch creation
 export const EventsContext = createContext<EventContextValue | undefined>(
   undefined,
 );
 
+// Reducer function for event list actions
 export const eventsReducer = (state: State, action: Action): State => {
   switch (action.type) {
     case 'SET_EVENTS':
@@ -39,14 +41,11 @@ export const eventsReducer = (state: State, action: Action): State => {
   }
 };
 
-export function EventsContextProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+// Create provider and dispatch function
+export function EventsContextProvider({ children }: { children: React.ReactNode; }) {
   const [state, dispatch] = useReducer(eventsReducer, {
     events: [] as Event[],
-  });
+  }); // Initial state
 
   return (
     <EventsContext.Provider value={{ ...state, dispatch } as EventContextValue}>

@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { useEventsContext } from '../hooks/useEventsContext';
 import { useAuthContext } from '../hooks/useAuthContext';
 
-// components
 import EventDetails from './EventDetails';
 import { Row, Spinner } from 'react-bootstrap';
 
@@ -13,8 +12,9 @@ const EventList = () => {
 
   useEffect(() => {
     const fetchEvents = async () => {
-      if (!user) return;
+      if (!user) return; // Return if no user is logged in
 
+      // Get events from API
       const response = await fetch('/api/events', {
         headers: { Authorization: `Bearer ${user.token}` },
       });
@@ -23,6 +23,7 @@ const EventList = () => {
       if (response.ok) {
         dispatch({ type: 'SET_EVENTS', payload: json });
       } else if (response.status === 401) {
+        // Expired token, logged-out user will be redirected to login page
         authDispatch({ type: 'LOGOUT' });
       }
     };

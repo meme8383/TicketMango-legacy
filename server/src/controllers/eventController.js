@@ -1,35 +1,37 @@
 const mongoose = require('mongoose');
 const Event = require('../models/eventModel');
 
-// get all events
+// Get all events
 const getEvents = async (req, res) => {
   const user_id = req.user._id;
 
+  // Sort events by created date (newest first)
   const events = await Event.find({ user_id }).sort({ createdAt: -1 });
 
   res.status(200).json(events);
 };
 
-// get a single event
+// Get a single event by id
 const getEvent = async (req, res) => {
   const { id } = req.params;
 
+  // Check if id is valid
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    res.status(404).json({ error: 'No such event' });
+    res.status(404).json({ error: 'Invalid identifier' });
     return;
   }
 
+  // Get event and check if it exists
   const event = await Event.findById(id);
-
   if (!event) {
-    res.status(404).json({ error: 'No such event' });
+    res.status(404).json({ error: 'Event does not exist' });
     return;
   }
 
   res.status(200).json(event);
 };
 
-// create new event
+// Create new event
 const createEvent = async (req, res) => {
   const { title, date, location, description, maxParticipants } = req.body;
 
@@ -38,7 +40,7 @@ const createEvent = async (req, res) => {
     return;
   }
 
-  // add doc to db
+  // Add doc to db
   try {
     const user_id = req.user._id;
     const event = await Event.create({
@@ -55,31 +57,31 @@ const createEvent = async (req, res) => {
   }
 };
 
-// delete a event
+// Delete an event
 const deleteEvent = async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    res.status(404).json({ error: 'No such event' });
+    res.status(404).json({ error: 'Invalid identifier' });
     return;
   }
 
   const event = await Event.findOneAndDelete({ _id: id });
 
   if (!event) {
-    res.status(400).json({ error: 'No such event' });
+    res.status(400).json({ error: 'Event does not exist' });
     return;
   }
 
   res.status(200).json(event);
 };
 
-// update a event
+// Update an event
 const updateEvent = async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    res.status(404).json({ error: 'No such event' });
+    res.status(404).json({ error: 'Invalid identifier' });
     return;
   }
 
@@ -91,7 +93,7 @@ const updateEvent = async (req, res) => {
   );
 
   if (!event) {
-    res.status(400).json({ error: 'No such event' });
+    res.status(400).json({ error: 'Event does not exist' });
     return;
   }
 

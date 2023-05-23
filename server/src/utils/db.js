@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const debug = require('debug')('ticketmango:server');
 const errlog = require('debug')('ticketmango:error');
 
+// Get the URI from the environment
 const db = process.env.MONGODB_URI;
 
 const connectDB = async () => {

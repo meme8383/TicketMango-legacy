@@ -14,17 +14,17 @@ import validator from 'validator';
 
 const Signup = () => {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-
-  const [passwordsMatch, setPasswordsMatch] = useState(false);
-  const [confirmError, setConfirmError] = useState('');
-
-  const [strongPassword, setStrongPassword] = useState(false);
-  const [passwordError, setPasswordError] = useState('');
-
   const [emailValid, setEmailValid] = useState(false);
+  // Form control feedback
   const [emailError, setEmailError] = useState('');
+
+  const [password, setPassword] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [strongPassword, setStrongPassword] = useState(false);
+
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [confirmError, setConfirmError] = useState('');
+  const [passwordsMatch, setPasswordsMatch] = useState(false);
 
   const [firstName, setFirstName] = useState('');
   const [firstNameValid, setFirstNameValid] = useState(false);
@@ -34,6 +34,7 @@ const Signup = () => {
   const [lastNameValid, setLastNameValid] = useState(false);
   const [lastNameError, setLastNameError] = useState('');
 
+  // Error popup
   const [show, setShow] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -49,22 +50,26 @@ const Signup = () => {
       !firstNameValid ||
       !lastNameValid
     ) {
+      // Recheck inputs
       handleFirstName(firstName);
       handleLastName(lastName);
       handleEmail(email);
       handlePassword(password);
       handleConfirmPassword(confirmPassword);
       setErrorMessage('Please resolve all errors before submitting.');
+      setShow(true); // Show error popup
       return;
     }
 
     await signup(email, password, firstName, lastName);
-    setShow(true);
+    setShow(true); // Show API error popup
   };
 
   const handleFirstName = (name: string) => {
+    // Check if first name is at least 2 characters long
     if (name.length < 2) {
       setFirstNameError('Please enter your first name');
+      setFirstNameValid(false);
     } else {
       setFirstNameError('');
       setFirstNameValid(true);
@@ -73,8 +78,10 @@ const Signup = () => {
   };
 
   const handleLastName = (name: string) => {
+    // Check if last name is at least 2 characters long
     if (name.length < 2) {
       setLastNameError('Please enter your last name');
+      setLastNameValid(false);
     } else {
       setLastNameError('');
       setLastNameValid(true);
@@ -83,8 +90,10 @@ const Signup = () => {
   };
 
   const handleEmail = (email: string) => {
+    // Check if email is valid
     if (!validator.isEmail(email)) {
       setEmailError('Please enter a valid email address');
+      setEmailValid(false);
     } else {
       setEmailError('');
       setEmailValid(true);
@@ -93,10 +102,12 @@ const Signup = () => {
   };
 
   const handlePassword = (pass: string) => {
+    // Check if password is strong
     const lowerCase = /[a-z]/;
     const upperCase = /[A-Z]/;
     const number = /[0-9]/;
 
+    setStrongPassword(false);
     if (pass.length < 8) {
       setPasswordError('Password must be at least 8 characters long');
     } else if (!pass.match(lowerCase)) {
@@ -123,8 +134,10 @@ const Signup = () => {
   };
 
   const handleConfirmPassword = (pass: string) => {
+    // Check if passwords match
     if (pass !== password) {
       setConfirmError('Passwords do not match');
+      setPasswordsMatch(false);
     } else {
       setConfirmError('');
       setPasswordsMatch(true);
@@ -134,6 +147,7 @@ const Signup = () => {
   };
 
   useEffect(() => {
+    // Handle API errors
     switch (error) {
       case undefined:
       case '':
@@ -153,7 +167,7 @@ const Signup = () => {
         setErrorMessage(
           'Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, and one number',
         );
-        setPasswordError('Please enter a stronger password.');
+        setPasswordError('Please enter a stronger password');
         setStrongPassword(false);
         break;
       case 'EMPTY_FIELD':

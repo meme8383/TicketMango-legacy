@@ -20,6 +20,7 @@ export const useEvent = () => {
     setIsLoading(true);
     setError('');
 
+    // Ensure user is logged in
     if (!user) {
       setError('You must be logged in to create an event.');
       return;
@@ -27,6 +28,7 @@ export const useEvent = () => {
 
     const event = { title, date, location, description, maxParticipants };
 
+    // Send request to create event
     const response = await fetch('/api/events', {
       method: 'POST',
       body: JSON.stringify(event),
@@ -37,12 +39,14 @@ export const useEvent = () => {
     });
     const json = await response.json();
 
+    // Handle errors
     if (!response.ok) {
       setError(json.error);
     }
     if (response.ok) {
       setError('');
       setEventID(json._id);
+      // Add event to context
       dispatch({ type: 'CREATE_EVENT', payload: json });
     }
 

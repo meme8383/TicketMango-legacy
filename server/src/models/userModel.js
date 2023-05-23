@@ -24,14 +24,14 @@ const userSchema = new Schema({
   },
 });
 
-// static signup method
+// Static signup method
 userSchema.statics.signup = async function signup(
   email,
   password,
   firstName,
   lastName,
 ) {
-  // validation
+  // Validation
   if (!email || !password || !firstName || !lastName) {
     throw Error('EMPTY_FIELD');
   }
@@ -42,12 +42,14 @@ userSchema.statics.signup = async function signup(
     throw Error('WEAK_PASSWORD');
   }
 
+  // Check if email exists
   const exists = await this.findOne({ email });
 
   if (exists) {
     throw Error('EMAIL_INUSE');
   }
 
+  // Hash password
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(password, salt);
 
@@ -60,17 +62,20 @@ userSchema.statics.signup = async function signup(
   return user;
 };
 
-// static login method
+// Static login method
 userSchema.statics.login = async function login(email, password) {
+  // Validation
   if (!email || !password) {
     throw Error('EMPTY_FIELD');
   }
 
+  // Check if email exists
   const user = await this.findOne({ email });
   if (!user) {
     throw Error('EMAIL_NOTFOUND');
   }
 
+  // Check if password is correct
   const match = await bcrypt.compare(password, user.password);
   if (!match) {
     throw Error('INCORRECT_PASSWORD');

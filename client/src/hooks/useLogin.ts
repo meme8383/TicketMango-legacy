@@ -10,6 +10,7 @@ export const useLogin = () => {
     setIsLoading(true);
     setError('');
 
+    // Make login request
     const response = await fetch('/api/user/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -17,18 +18,18 @@ export const useLogin = () => {
     });
     const json = await response.json();
 
+    // Handle errors
     if (!response.ok) {
       setIsLoading(false);
       setError(json.error);
     }
     if (response.ok) {
-      // save the user to local storage
+      // Save the user to local storage
       localStorage.setItem('user', JSON.stringify(json));
 
-      // update the auth context
+      // Update the auth context
       dispatch({ type: 'LOGIN', payload: json });
 
-      // update loading state
       setIsLoading(false);
     }
   };

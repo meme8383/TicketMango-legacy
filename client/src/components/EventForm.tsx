@@ -16,6 +16,7 @@ const EventForm = () => {
   const { create, isLoading, error, eventID } = useEvent();
 
   const [title, setTitle] = useState<string>('');
+  // Form control feedback
   const [titleError, setTitleError] = useState<string>('');
 
   const [date, setDate] = useState<string>('');
@@ -39,6 +40,7 @@ const EventForm = () => {
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
+    // Refresh errors
     setTitleError('');
     setDateError('');
     setLocationError('');
@@ -61,6 +63,7 @@ const EventForm = () => {
       return;
     }
 
+    // Create event
     await create(
       title,
       new Date(date + ' ' + time),
@@ -72,6 +75,7 @@ const EventForm = () => {
   };
 
   useEffect(() => {
+    // API error handling
     switch (error) {
       case null:
       case '':
@@ -158,11 +162,11 @@ const EventForm = () => {
                 className="mb-3"
                 variant="primary"
                 type="submit"
-                disabled={!!isLoading}
+                disabled={isLoading}
               >
                 Add Event
               </Button>
-              {!!isLoading && <Spinner />}
+              {isLoading && <Spinner />}
               {errorMessage && show && (
                 <Alert
                   variant="danger"

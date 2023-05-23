@@ -19,10 +19,12 @@ interface AuthContextValue extends State {
   dispatch: React.Dispatch<Action>;
 }
 
+// Initialize context as undefined before dispatch creation
 export const AuthContext = createContext<AuthContextValue | undefined>(
   undefined,
 );
 
+// Reducer handling user actions
 export const authReducer = (state: State, action: Action) => {
   switch (action.type) {
     case 'LOGIN':
@@ -36,23 +38,24 @@ export const authReducer = (state: State, action: Action) => {
   }
 };
 
+// Create provider and dispatch function
 export function AuthContextProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(authReducer, {
     user: null,
     loading: true,
-  });
+  }); // Initial state
 
   useEffect(() => {
+    // Get user from local storage
     const user = JSON.parse(localStorage.getItem('user') || '{}');
 
     if (user) {
       dispatch({ type: 'LOGIN', payload: user });
     } else {
+      // Set loading to false if no user is found
       dispatch({ type: 'CONTINUE' });
     }
   }, []);
-
-  console.log('AuthContext state:', state);
 
   return (
     <AuthContext.Provider value={{ ...state, dispatch } as AuthContextValue}>

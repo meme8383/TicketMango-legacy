@@ -20,7 +20,7 @@ import EventList from './components/EventList';
 import NewEvent from './pages/NewEvent';
 
 function App() {
-  const { user, loading } = useAuthContext();
+  const { user, loading } = useAuthContext(); // get user
 
   return (
     <div className="App">

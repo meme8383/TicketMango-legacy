@@ -15,6 +15,7 @@ export const useSignup = () => {
     setIsLoading(true);
     setError('');
 
+    // Make signup request to API
     const response = await fetch('/api/user/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -22,18 +23,19 @@ export const useSignup = () => {
     });
     const json = await response.json();
 
+    // Handle errors
     if (!response.ok) {
       setIsLoading(false);
       setError(json.error);
     }
     if (response.ok) {
-      // save the user to local storage
+      // Login as user
+      // Save the user to local storage
       localStorage.setItem('user', JSON.stringify(json));
 
-      // update the auth context
+      // Update the auth context
       dispatch({ type: 'LOGIN', payload: json });
 
-      // update loading state
       setIsLoading(false);
     }
   };

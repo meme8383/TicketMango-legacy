@@ -10,7 +10,7 @@ const requireAuth = require('../middleware/requireAuth');
 
 const router = express.Router();
 
-// middleware
+// Middleware
 router.use(requireAuth);
 
 // GET all events
@@ -22,10 +22,10 @@ router.get('/:id', getEvent);
 // POST a new event
 router.post('/', createEvent);
 
-// DELETE a event
+// DELETE an event
 router.delete('/:id', deleteEvent);
 
-// UPDATE a event
+// UPDATE an event
 router.patch('/:id', updateEvent);
 
 module.exports = router;

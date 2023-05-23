@@ -13,18 +13,22 @@ import {
 
 const Login = () => {
   const [email, setEmail] = useState('');
+  // Form control feedback
   const [emailError, setEmailError] = useState('');
 
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
+  // Error popup
   const [show, setShow] = useState(true);
-  const { login, error, isLoading } = useLogin();
   const [errorMessage, setErrorMessage] = useState('');
+
+  const { login, error, isLoading } = useLogin();
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
+    // Refresh errors
     setEmailError('');
     setPasswordError('');
 
@@ -35,13 +39,15 @@ const Login = () => {
       if (!password) {
         setPasswordError('Please enter your password');
       }
+      return;
     }
 
     await login(email, password);
-    setShow(true);
+    setShow(true); // Show error message if any
   };
 
   useEffect(() => {
+    // Login API errors
     switch (error) {
       case undefined:
       case '':
@@ -55,7 +61,7 @@ const Login = () => {
         break;
       case 'INCORRECT_PASSWORD':
         setErrorMessage('Incorrect password. Please try again.');
-        setPasswordError('Incorrect password.');
+        setPasswordError('Incorrect password');
         break;
       case 'EMPTY_FIELD':
         setErrorMessage('Please fill out all fields.');
@@ -106,11 +112,11 @@ const Login = () => {
               className="mb-3"
               variant="primary"
               type="submit"
-              disabled={!!isLoading}
+              disabled={isLoading}
             >
               Log in
             </Button>
-            {!!isLoading && <Spinner />}
+            {isLoading && <Spinner />}
             {errorMessage && show && (
               <Alert
                 variant="danger"
