@@ -174,7 +174,7 @@ const Signup = () => {
         setErrorMessage('Please fill out all fields.');
         break;
       default:
-        setErrorMessage('Something went wrong. Please try again.');
+        setErrorMessage('Something went wrong. Please try again later.');
     }
   }, [error]);
 

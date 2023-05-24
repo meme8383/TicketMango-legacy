@@ -44,7 +44,6 @@
     "lint:fix": "eslint --fix src --ext .js,.jsx,.ts,.tsx",
     "format": "prettier --write \"./**/*.{js,jsx,ts,tsx,css,scss,json,md}\"",
     "format:check": "prettier --check \"./**/*.{js,jsx,ts,tsx,css,scss,json,md}\"",
-    "flow": "flow",
     "build": "react-scripts build",
     "eject": "react-scripts eject"
   },

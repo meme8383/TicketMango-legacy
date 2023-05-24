@@ -37,17 +37,22 @@ export const useEvent = () => {
         Authorization: `Bearer ${user.token}`,
       },
     });
-    const json = await response.json();
 
     // Handle errors
-    if (!response.ok) {
-      setError(json.error);
-    }
     if (response.ok) {
+      const json = await response.json();
+
       setError('');
       setEventID(json._id);
       // Add event to context
       dispatch({ type: 'CREATE_EVENT', payload: json });
+    } else {
+      try {
+        const json = await response.json();
+        setError(json.error);
+      } catch (e) {
+        setError('Something went wrong.');
+      }
     }
 
     setIsLoading(false);

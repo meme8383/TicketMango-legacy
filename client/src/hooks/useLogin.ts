@@ -16,21 +16,24 @@ export const useLogin = () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
     });
-    const json = await response.json();
 
     // Handle errors
-    if (!response.ok) {
-      setIsLoading(false);
-      setError(json.error);
-    }
+    setIsLoading(false);
     if (response.ok) {
+      const json = await response.json();
+
       // Save the user to local storage
       localStorage.setItem('user', JSON.stringify(json));
 
       // Update the auth context
       dispatch({ type: 'LOGIN', payload: json });
-
-      setIsLoading(false);
+    } else {
+      try {
+        const json = await response.json();
+        setError(json.message);
+      } catch (e) {
+        setError('Something went wrong');
+      }
     }
   };
 
