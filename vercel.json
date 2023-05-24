@@ -1,7 +1,7 @@
 {
   "builds": [
     {
-      "src": "server/src/app.ts",
+      "src": "server/bin/www",
       "use": "@vercel/node"
     },
     {
