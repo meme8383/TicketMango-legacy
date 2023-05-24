@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
+import mongoose from 'mongoose';
 import User from '../models/userModel';
 
 const createToken = (_id: string) => {
@@ -48,4 +49,28 @@ export const signupUser = async (req: Request, res: Response) => {
     }
     res.status(400).json({ error: message });
   }
+};
+
+// delete a user
+export const deleteUser = async (req: Request, res: Response) => {
+  if (!req.user) {
+    res.status(401).json({ error: 'Unauthorized' });
+    return;
+  }
+
+  const id = req.user._id;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    res.status(404).json({ error: 'Invalid identifier' });
+    return;
+  }
+
+  const user = await User.findOneAndDelete({ _id: id });
+
+  if (!user) {
+    res.status(400).json({ error: 'User does not exist' });
+    return;
+  }
+
+  res.status(200).json(user);
 };
