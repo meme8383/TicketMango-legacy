@@ -1,4 +1,4 @@
-import { IUser } from './models/user';
+import { IUser } from '../models/userModel';
 
 // Extend request object with user property
 declare module 'express' {
