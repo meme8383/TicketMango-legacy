@@ -1,10 +1,21 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const validator = require('validator');
+import mongoose, { Schema } from 'mongoose';
+import bcrypt from 'bcrypt';
+import validator from 'validator';
 
-const { Schema } = mongoose;
+// Create user interface
+export interface IUser extends mongoose.Document {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+}
 
-const userSchema = new Schema({
+export interface IUserModel extends mongoose.Model<IUser> {
+  signup: (email: string, password: string, firstName: string, lastName: string) => Promise<IUser>;
+  login: (email: string, password: string) => Promise<IUser>;
+}
+
+const userSchema: Schema = new Schema({
   firstName: {
     type: String,
     required: true,
@@ -26,10 +37,10 @@ const userSchema = new Schema({
 
 // Static signup method
 userSchema.statics.signup = async function signup(
-  email,
-  password,
-  firstName,
-  lastName,
+  email: string,
+  password: string,
+  firstName: string,
+  lastName: string,
 ) {
   // Validation
   if (!email || !password || !firstName || !lastName) {
@@ -53,17 +64,16 @@ userSchema.statics.signup = async function signup(
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(password, salt);
 
-  const user = await this.create({
+  return this.create({
     email,
     password: hash,
     firstName,
     lastName,
   });
-  return user;
 };
 
 // Static login method
-userSchema.statics.login = async function login(email, password) {
+userSchema.statics.login = async function login(email: string, password: string) {
   // Validation
   if (!email || !password) {
     throw Error('EMPTY_FIELD');
@@ -84,4 +94,6 @@ userSchema.statics.login = async function login(email, password) {
   return user;
 };
 
-module.exports = mongoose.model('User', userSchema);
+const User: IUserModel = mongoose.model<IUser, IUserModel>('User', userSchema);
+
+export default User;

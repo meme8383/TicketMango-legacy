@@ -1,16 +1,16 @@
-const express = require('express');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
+import express from 'express';
+import cookieParser from 'cookie-parser';
+import logger from 'morgan';
 
 // Database and routes
-const connectDB = require('./utils/db');
-const eventRouter = require('./routes/events');
-const userRouter = require('./routes/user');
+import connectDB from './utils/db';
+import eventRouter from './routes/events';
+import userRouter from './routes/user';
 
 const app = express();
 
 // Connect to database
-connectDB()
+connectDB();
 
 // Middleware
 app.use(logger('dev'));

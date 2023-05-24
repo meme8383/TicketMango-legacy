@@ -1,8 +1,6 @@
-const mongoose = require('mongoose');
+import mongoose, { Schema } from 'mongoose';
 
-const { Schema } = mongoose;
-
-const ticketSchema = new Schema(
+const eventSchema = new Schema(
   {
     title: {
       type: String,
@@ -18,10 +16,10 @@ const ticketSchema = new Schema(
     description: {
       type: String,
     },
-    user_id: {
-      type: String,
+    maxParticipants: {
+      type: Number,
     },
-    event_id: {
+    user_id: {
       type: String,
       required: true,
     },
@@ -29,4 +27,4 @@ const ticketSchema = new Schema(
   { timestamps: true },
 );
 
-module.exports = mongoose.model('Ticket', ticketSchema);
+export default mongoose.model('Event', eventSchema);

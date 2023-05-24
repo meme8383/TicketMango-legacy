@@ -1,8 +1,14 @@
-const mongoose = require('mongoose');
-const Event = require('../models/eventModel');
+import { Request, Response } from 'express';
+import mongoose from 'mongoose';
+import Event from '../models/eventModel';
 
 // Get all events
-const getEvents = async (req, res) => {
+export const getEvents = async (req: Request, res: Response) => {
+  if (!req.user) {
+    res.status(401).json({ error: 'Unauthorized' });
+    return;
+  }
+
   const user_id = req.user._id;
 
   // Sort events by created date (newest first)
@@ -12,7 +18,7 @@ const getEvents = async (req, res) => {
 };
 
 // Get a single event by id
-const getEvent = async (req, res) => {
+export const getEvent = async (req: Request, res: Response) => {
   const { id } = req.params;
 
   // Check if id is valid
@@ -32,7 +38,12 @@ const getEvent = async (req, res) => {
 };
 
 // Create new event
-const createEvent = async (req, res) => {
+export const createEvent = async (req: Request, res: Response) => {
+  if (!req.user) {
+    res.status(401).json({ error: 'Unauthorized' });
+    return;
+  }
+
   const { title, date, location, description, maxParticipants } = req.body;
 
   if (!title || !date) {
@@ -52,13 +63,19 @@ const createEvent = async (req, res) => {
       user_id,
     });
     res.status(200).json(event);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
+  } catch (e) {
+    let message = '';
+    if (typeof e === 'string') {
+      message = e.toUpperCase(); // works, `e` narrowed to string
+    } else if (e instanceof Error) {
+      message = e.message;
+    }
+    res.status(400).json({ error: message });
   }
 };
 
 // Delete an event
-const deleteEvent = async (req, res) => {
+export const deleteEvent = async (req: Request, res: Response) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -77,7 +94,7 @@ const deleteEvent = async (req, res) => {
 };
 
 // Update an event
-const updateEvent = async (req, res) => {
+export const updateEvent = async (req: Request, res: Response) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -98,12 +115,4 @@ const updateEvent = async (req, res) => {
   }
 
   res.status(200).json(event);
-};
-
-module.exports = {
-  getEvents,
-  getEvent,
-  createEvent,
-  deleteEvent,
-  updateEvent,
 };

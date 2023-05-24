@@ -28,7 +28,7 @@ const EventDetails = ({ event }: { event: Event }) => {
 
   return (
     <Col>
-      <Card className='event-details m-3'>
+      <Card className="event-details m-3">
         <Card.Body>
           <Card.Title>{event.title}</Card.Title>
           <Card.Text>
@@ -42,18 +42,18 @@ const EventDetails = ({ event }: { event: Event }) => {
             <Card.Text>{event.maxParticipants} attendees max</Card.Text>
           )}
           <LinkContainer to={'/events/' + event._id + '/scan'}>
-            <Button className='m-1' variant='primary'>
+            <Button className="m-1" variant="primary">
               Scan
             </Button>
           </LinkContainer>
           <OverlayTrigger
             trigger={['hover', 'focus']}
             overlay={renderTooltip}
-            placement='top'
+            placement="top"
           >
             <Button
-              className='m-1'
-              variant='secondary'
+              className="m-1"
+              variant="secondary"
               onClick={copyToClipboard}
               onMouseLeave={() => setTimeout(() => setCopied(false), 300)}
             >
@@ -61,11 +61,11 @@ const EventDetails = ({ event }: { event: Event }) => {
             </Button>
           </OverlayTrigger>
           <LinkContainer to={'/events/' + event._id + '/edit'}>
-            <Button className='m-1' variant='warning'>
+            <Button className="m-1" variant="warning">
               Edit
             </Button>
           </LinkContainer>
-          <Card.Text className='text-muted'>
+          <Card.Text className="text-muted">
             Modified:{' '}
             {formatDistanceToNow(new Date(event.createdAt), {
               addSuffix: true,

@@ -1,11 +1,22 @@
 {
-  "extends": ["eslint:recommended", "plugin:import/errors", "airbnb-base"],
-  "plugins": ["import"],
   "env": {
     "node": true,
-    "es6": true,
-    "browser": true
+    "es2020": true
   },
+  "extends": [
+    "eslint:recommended",
+    "plugin:import/errors",
+    "airbnb-base",
+    "airbnb-typescript/base",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 11,
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
+  "plugins": ["import", "@typescript-eslint"],
   "rules": {
     "object-curly-newline": "off",
     "no-underscore-dangle": [
@@ -21,6 +32,22 @@
         "allow": ["[_id]$"]
       }
     ],
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": "default",
+        "format": ["camelCase", "UPPER_CASE", "PascalCase", "snake_case"],
+        "leadingUnderscore": "allow",
+        "trailingUnderscore": "allow"
+      }
+    ],
     "arrow-body-style": "off"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
   }
 }

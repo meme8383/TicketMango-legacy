@@ -42,7 +42,11 @@ export const eventsReducer = (state: State, action: Action): State => {
 };
 
 // Create provider and dispatch function
-export function EventsContextProvider({ children }: { children: React.ReactNode; }) {
+export function EventsContextProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [state, dispatch] = useReducer(eventsReducer, {
     events: [] as Event[],
   }); // Initial state

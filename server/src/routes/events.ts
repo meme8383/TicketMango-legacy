@@ -1,12 +1,6 @@
-const express = require('express');
-const {
-  getEvents,
-  getEvent,
-  createEvent,
-  deleteEvent,
-  updateEvent,
-} = require('../controllers/eventController');
-const requireAuth = require('../middleware/requireAuth');
+import express from 'express';
+import { getEvents, getEvent, createEvent, deleteEvent, updateEvent } from '../controllers/eventController';
+import requireAuth from '../middleware/requireAuth';
 
 const router = express.Router();
 
@@ -28,4 +22,4 @@ router.delete('/:id', deleteEvent);
 // UPDATE an event
 router.patch('/:id', updateEvent);
 
-module.exports = router;
+export default router;

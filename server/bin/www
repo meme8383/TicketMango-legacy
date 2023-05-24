@@ -3,7 +3,7 @@
 /**
  * Module dependencies.
  */
-const app = require('../src/app')
+const app = require('../dist/app')
 const debug = require('debug')('ticketmango:server')
 const http = require('http')
 
