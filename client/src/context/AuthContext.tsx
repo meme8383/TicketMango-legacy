@@ -47,10 +47,10 @@ export function AuthContextProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     // Get user from local storage
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const user = localStorage.getItem('user');
 
     if (user) {
-      dispatch({ type: 'LOGIN', payload: user });
+      dispatch({ type: 'LOGIN', payload: JSON.parse(user) });
     } else {
       // Set loading to false if no user is found
       dispatch({ type: 'CONTINUE' });
