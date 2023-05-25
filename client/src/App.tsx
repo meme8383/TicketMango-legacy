@@ -14,6 +14,7 @@ import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import NotFound from './pages/NotFound';
+import EventPage from './pages/EventPage';
 
 import Navbar from './components/Navbar';
 import EventList from './components/EventList';
@@ -41,12 +42,18 @@ function App() {
               >
                 <Route path="" element={<EventList />} />
               </Route>
-              <Route
-                path="events"
-                element={user ? <Outlet /> : <Navigate to="/login" />}
-              >
-                <Route path="new" element={<NewEvent />} />
-                <Route path=":eventId" element={<EventList />} />
+              <Route path="events" element={<Outlet />}>
+                <Route
+                  path="new"
+                  element={user ? <NewEvent /> : <Navigate to="/login" />}
+                />
+                <Route path=":id" element={<Outlet />}>
+                  <Route path="" element={<EventPage />} />
+                  <Route
+                    path="edit"
+                    element={user ? <NewEvent /> : <Navigate to="/login" />}
+                  />
+                </Route>
               </Route>
               <Route
                 path="login"

@@ -4,14 +4,14 @@ import requireAuth from '../middleware/requireAuth';
 
 const router = express.Router();
 
+// GET a single event
+router.get('/:id', getEvent);
+
 // Middleware
 router.use(requireAuth);
 
 // GET all events
 router.get('/', getEvents);
-
-// GET a single event
-router.get('/:id', getEvent);
 
 // POST a new event
 router.post('/', createEvent);
