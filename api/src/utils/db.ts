@@ -1,7 +1,7 @@
 import mongoose, { ConnectOptions } from 'mongoose';
 import Debug from 'debug';
 
-const debug = Debug('ticketmango:server');
+const debug = Debug('ticketmango:api');
 const errlog = Debug('ticketmango:error');
 
 // Get the URI from the environment

@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 const app = require('../dist/app')
-const debug = require('debug')('ticketmango:server')
+const debug = require('debug')('ticketmango:api')
 const http = require('http')
 
 
@@ -15,7 +15,7 @@ const port = normalizePort(process.env.PORT || '8082')
 app.set('port', port)
 
 /**
- * Create HTTP server.
+ * Create HTTP api.
  */
 const server = http.createServer(app)
 
@@ -46,7 +46,7 @@ function normalizePort(val) {
 }
 
 /**
- * Event listener for HTTP server "error" event.
+ * Event listener for HTTP api "error" event.
  */
 function onError(error) {
   if (error.syscall !== 'listen') {
@@ -73,7 +73,7 @@ function onError(error) {
 }
 
 /**
- * Event listener for HTTP server "listening" event.
+ * Event listener for HTTP api "listening" event.
  */
 function onListening() {
   const addr = server.address()
