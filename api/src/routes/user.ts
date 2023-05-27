@@ -1,6 +1,6 @@
 import express from 'express';
 import { loginUser, signupUser, deleteUser } from '../controllers/userController';
-import RequireAuth from '../middleware/requireAuth';
+import requireAuth from '../middleware/requireAuth';
 
 const router = express.Router();
 
@@ -11,7 +11,7 @@ router.post('/login', loginUser);
 router.post('/signup', signupUser);
 
 // Require auth for editing user
-router.use(RequireAuth);
+router.use(requireAuth);
 
 // Delete route
 router.delete('/delete', deleteUser);
