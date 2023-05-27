@@ -19,6 +19,7 @@ import EventPage from './pages/EventPage';
 import Navbar from './components/Navbar';
 import EventList from './components/EventList';
 import NewEvent from './pages/NewEvent';
+import Ticket from './pages/Ticket';
 
 function App() {
   const { user, loading } = useAuthContext(); // get user
@@ -49,6 +50,9 @@ function App() {
                 />
                 <Route path=":id" element={<Outlet />}>
                   <Route path="" element={<EventPage />} />
+                  <Route path="tickets" element={<Outlet />}>
+                    <Route path={':ticketID'} element={<Ticket />} />
+                  </Route>
                   <Route
                     path="edit"
                     element={user ? <NewEvent /> : <Navigate to="/login" />}
