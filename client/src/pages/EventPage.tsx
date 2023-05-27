@@ -25,7 +25,7 @@ const EventPage = () => {
       } else {
         try {
           const json = await response.json();
-          setError(json.message);
+          setError('Error: ' + json.error);
         } catch (e) {
           setError('An unknown error occurred. Please try again later.');
         }
@@ -50,7 +50,7 @@ const EventPage = () => {
         setTicketError('');
         break;
       default:
-        setTicketError('Something went wrong. Please try again.');
+        setTicketError('Something went wrong. Please try again later.');
     }
   }, [error]);
 

@@ -26,7 +26,7 @@ const Ticket = () => {
       } else {
         try {
           const json = await response.json();
-          setError(json.message);
+          setError('Error: ' + json.error);
         } catch (e) {
           setError('An unknown error occurred. Please try again later.');
         }
