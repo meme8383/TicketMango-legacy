@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Lint and Format" type="CompoundRunConfigurationType">
+    <toRun name="format" type="js.build_tools.npm" />
+    <toRun name="format (api)" type="js.build_tools.npm" />
+    <toRun name="lint" type="js.build_tools.npm" />
+    <toRun name="lint (api)" type="js.build_tools.npm" />
+    <method v="2" />
+  </configuration>
+</component>

@@ -1,4 +1,7 @@
-/.idea
+# JetBrains files
+.idea/*
+!.idea/.name
+!.idea/runConfigurations
 
 # dependencies
 client/node_modules
