@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import Event from '../models/eventModel';
+import Ticket from '../models/ticketModel';
 
 // Get all events
 export const getEvents = async (req: Request, res: Response) => {
@@ -115,4 +116,86 @@ export const updateEvent = async (req: Request, res: Response) => {
   }
 
   res.status(200).json(event);
+};
+
+// Create a ticket
+export const createTicket = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    res.status(404).json({ error: 'Invalid identifier' });
+    return;
+  }
+
+  const event = await Event.findById(id);
+  if (!event) {
+    res.status(404).json({ error: 'Event does not exist' });
+    return;
+  }
+
+  const { info } = req.body;
+  let user_id = null;
+  if (req.user) {
+    user_id = req.user._id;
+  }
+
+  try {
+    const ticket = await Ticket.create({
+      user_id,
+      event_id: id,
+      info,
+    });
+    res.status(200).json(ticket);
+  } catch (e) {
+    let message = '';
+    if (typeof e === 'string') {
+      message = e.toUpperCase();
+    } else if (e instanceof Error) {
+      message = e.message;
+    }
+    res.status(400).json({ error: message });
+  }
+};
+
+// Get a single ticket
+export const getTicket = async (req: Request, res: Response) => {
+  const { id, ticketId } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id) || !mongoose.Types.ObjectId.isValid(ticketId)) {
+    res.status(404).json({ error: 'Invalid identifier' });
+    return;
+  }
+
+  const ticket = await Ticket.findById(ticketId);
+  if (!ticket) {
+    res.status(404).json({ error: 'Ticket does not exist' });
+    return;
+  }
+
+  if (ticket.event_id !== id) {
+    res.status(404).json({ error: 'Ticket does not exist' });
+    return;
+  }
+
+  res.status(200).json(ticket);
+};
+
+// Get all tickets
+export const getTickets = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    res.status(404).json({ error: 'Invalid identifier' });
+    return;
+  }
+
+  const event = await Event.findById(id);
+  if (!event) {
+    res.status(404).json({ error: 'Event does not exist' });
+    return;
+  }
+
+  const tickets = await Ticket.find({ event_id: id });
+
+  res.status(200).json(tickets);
 };
