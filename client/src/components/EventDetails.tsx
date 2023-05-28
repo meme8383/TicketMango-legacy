@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Event from '../types/Event';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 
-import { Button, Card, Col, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Button, Card, Col, OverlayTrigger, Spinner, Tooltip } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useAuthContext } from '../hooks/useAuthContext';
 
@@ -75,7 +75,7 @@ const EventDetails = ({ event }: { event: Event }) => {
                 : ''
             }
           >
-            {attendees ?? '?'} attendees registered
+            {attendees ?? <Spinner size="sm" animation="border" /> } attendees registered
             {event.maxParticipants && ' / ' + event.maxParticipants + ' max'}
           </Card.Text>
           <LinkContainer to={'/events/' + event._id + '/scan'}>
