@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Event from '../types/Event';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 
 import { Button, Card, Col, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 const EventDetails = ({ event }: { event: Event }) => {
   const [copied, setCopied] = useState<boolean>(false);
+  const [attendees, setAttendees] = useState<number>();
+
+  const { user } = useAuthContext();
 
   const copyToClipboard = () => {
     // Copy public event link to clipboard
@@ -15,6 +19,30 @@ const EventDetails = ({ event }: { event: Event }) => {
     );
     setCopied(true);
   };
+
+  useEffect(() => {
+    const fetchTickets = async () => {
+      if (!user) return; // Return if no user is logged in
+
+      const response = await fetch(`/api/events/${event._id}/tickets`, {
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
+
+      if (response.ok) {
+        const json = await response.json();
+        setAttendees(json.length);
+      } else {
+        try {
+          const json = await response.json();
+          console.log(json);
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    };
+
+    fetchTickets();
+  }, [event._id, user]);
 
   /**
    * "any" type definition must be used for Tooltip props
@@ -38,9 +66,18 @@ const EventDetails = ({ event }: { event: Event }) => {
               timeStyle: 'short',
             })}
           </Card.Text>
-          {event.maxParticipants && (
-            <Card.Text>{event.maxParticipants} attendees max</Card.Text>
-          )}
+          <Card.Text
+            className={
+              attendees &&
+              event.maxParticipants &&
+              attendees >= event.maxParticipants
+                ? 'text-danger'
+                : ''
+            }
+          >
+            {attendees ?? '?'} attendees registered
+            {event.maxParticipants && ' / ' + event.maxParticipants + ' max'}
+          </Card.Text>
           <LinkContainer to={'/events/' + event._id + '/scan'}>
             <Button className="m-1" variant="primary">
               Scan

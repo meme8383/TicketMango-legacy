@@ -49,6 +49,13 @@ const EventPage = () => {
       case '':
         setTicketError('');
         break;
+      case 'Invalid Identifier':
+      case 'Event does not exist':
+        setTicketError('Event could not be found. Plese try again later.');
+        break;
+      case 'Event is full':
+        setTicketError('The event is currently full.');
+        break;
       default:
         setTicketError('Something went wrong. Please try again later.');
     }

@@ -24,7 +24,7 @@ export const useTicket = () => {
     } else {
       try {
         const json = await response.json();
-        setError(json.message);
+        setError(json.error);
       } catch (e) {
         setError('Something went wrong');
       }

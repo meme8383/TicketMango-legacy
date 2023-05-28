@@ -133,6 +133,12 @@ export const createTicket = async (req: Request, res: Response) => {
     return;
   }
 
+  const tickets = await Ticket.find({ event_id: id });
+  if (event.maxParticipants && tickets.length >= event.maxParticipants) {
+    res.status(400).json({ error: 'Event is full' });
+    return;
+  }
+
   const { info } = req.body;
   let user_id = null;
   if (req.user) {
