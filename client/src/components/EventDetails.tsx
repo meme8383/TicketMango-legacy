@@ -86,9 +86,9 @@ const EventDetails = ({ event }: { event: Event }) => {
             registered
             {event.maxParticipants && ' / ' + event.maxParticipants + ' max'}
           </Card.Text>
-          <LinkContainer to={'/events/' + event._id + '/scan'}>
+          <LinkContainer to={'/events/' + event._id + '/edit'}>
             <Button className="m-1" variant="primary">
-              Scan
+              Edit
             </Button>
           </LinkContainer>
           <OverlayTrigger
