@@ -205,3 +205,46 @@ export const getTickets = async (req: Request, res: Response) => {
 
   res.status(200).json(tickets);
 };
+
+// Update a ticket
+export const updateTicket = async (req: Request, res: Response) => {
+  const { id, ticketId } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id) || !mongoose.Types.ObjectId.isValid(ticketId)) {
+    res.status(404).json({ error: 'Invalid identifier' });
+    return;
+  }
+
+  const ticket = await Ticket.findById(ticketId);
+  if (!ticket || ticket.event_id !== id) {
+    res.status(404).json({ error: 'Ticket does not exist' });
+    return;
+  }
+
+  const updatedTicket = await Ticket.findOneAndUpdate(
+    { _id: ticketId },
+    {
+      ...req.body,
+    },
+  );
+  res.status(200).json(updatedTicket);
+};
+
+// Delete a ticket
+export const deleteTicket = async (req: Request, res: Response) => {
+  const { id, ticketId } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id) || !mongoose.Types.ObjectId.isValid(ticketId)) {
+    res.status(404).json({ error: 'Invalid identifier' });
+    return;
+  }
+
+  const ticket = await Ticket.findById(ticketId);
+  if (!ticket || ticket.event_id !== id) {
+    res.status(404).json({ error: 'Ticket does not exist' });
+    return;
+  }
+
+  const deletedTicket = await Ticket.findOneAndDelete({ _id: ticketId });
+  res.status(200).json(deletedTicket);
+};

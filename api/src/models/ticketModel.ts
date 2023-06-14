@@ -9,6 +9,9 @@ const ticketSchema = new Schema(
       type: String,
       required: true,
     },
+    scannedAt: {
+      type: Date,
+    },
     info: {
       type: JSON,
     },

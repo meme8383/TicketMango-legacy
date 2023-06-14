@@ -21,6 +21,7 @@ import EventList from './components/EventList';
 import NewEvent from './pages/NewEvent';
 import Ticket from './pages/Ticket';
 import EventManager from './pages/EventManager';
+import EventScanner from './pages/EventScanner';
 
 function App() {
   const { user, loading } = useAuthContext(); // get user
@@ -57,6 +58,10 @@ function App() {
                   <Route
                     path="edit"
                     element={user ? <EventManager /> : <Navigate to="/login" />}
+                  />
+                  <Route
+                    path="scan"
+                    element={user ? <EventScanner /> : <Navigate to="/login" />}
                   />
                 </Route>
               </Route>
