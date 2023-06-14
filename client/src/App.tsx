@@ -20,6 +20,8 @@ import Navbar from './components/Navbar';
 import EventList from './components/EventList';
 import NewEvent from './pages/NewEvent';
 import Ticket from './pages/Ticket';
+import EventManager from './pages/EventManager';
+import EventScanner from './pages/EventScanner';
 
 function App() {
   const { user, loading } = useAuthContext(); // get user
@@ -55,7 +57,11 @@ function App() {
                   </Route>
                   <Route
                     path="edit"
-                    element={user ? <NewEvent /> : <Navigate to="/login" />}
+                    element={user ? <EventManager /> : <Navigate to="/login" />}
+                  />
+                  <Route
+                    path="scan"
+                    element={user ? <EventScanner /> : <Navigate to="/login" />}
                   />
                 </Route>
               </Route>

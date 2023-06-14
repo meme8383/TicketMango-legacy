@@ -8,6 +8,8 @@ import {
   createTicket,
   getTicket,
   getTickets,
+  updateTicket,
+  deleteTicket,
 } from '../controllers/eventController';
 import requireAuth from '../middleware/requireAuth';
 
@@ -24,6 +26,12 @@ router.get('/:id/tickets/:ticketId', getTicket);
 
 // Middleware
 router.use(requireAuth);
+
+// UPDATE a ticket
+router.patch('/:id/tickets/:ticketId', updateTicket);
+
+// DELETE a ticket
+router.delete('/:id/tickets/:ticketId', deleteTicket);
 
 // GET all events
 router.get('/', getEvents);

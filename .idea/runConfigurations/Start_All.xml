@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Start" type="CompoundRunConfigurationType">
+  <configuration default="false" name="Start All" type="CompoundRunConfigurationType">
     <toRun name="start" type="js.build_tools.npm" />
     <toRun name="start (api)" type="js.build_tools.npm" />
     <method v="2" />
