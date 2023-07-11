@@ -21,7 +21,7 @@ export const loginUser = async (req: Request, res: Response) => {
   } catch (e) {
     let message = '';
     if (typeof e === 'string') {
-      message = e.toUpperCase(); // works, `e` narrowed to string
+      message = e.toUpperCase();
     } else if (e instanceof Error) {
       message = e.message;
     }

@@ -54,7 +54,7 @@ userSchema.statics.signup = async function signup(
   }
 
   // Check if email exists
-  const exists = await this.findOne({ email });
+  const exists = await this.findOne({ email: email.toLowerCase() });
 
   if (exists) {
     throw Error('EMAIL_INUSE');
@@ -65,7 +65,7 @@ userSchema.statics.signup = async function signup(
   const hash = await bcrypt.hash(password, salt);
 
   return this.create({
-    email,
+    email: email.toLowerCase(),
     password: hash,
     firstName,
     lastName,
@@ -80,7 +80,7 @@ userSchema.statics.login = async function login(email: string, password: string)
   }
 
   // Check if email exists
-  const user = await this.findOne({ email });
+  const user = await this.findOne({ email: email.toLowerCase() });
   if (!user) {
     throw Error('EMAIL_NOTFOUND');
   }
