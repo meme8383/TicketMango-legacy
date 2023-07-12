@@ -9,7 +9,7 @@ const EventScanner = () => {
 
   return (
     <Container>
-      <Scanner />
+      <Scanner event_id={id as string} />
       <TicketList event_id={id as string} />
     </Container>
   );
