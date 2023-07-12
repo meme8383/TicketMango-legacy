@@ -24,7 +24,6 @@ const Scanner = ({ event_id }: { event_id: string }) => {
 
   return (
     <div>
-      <h5>Scan QR Code</h5>
       <QrReader
         onResult={handleScan}
         constraints={{ facingMode: 'environment' }}
