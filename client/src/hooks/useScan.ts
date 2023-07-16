@@ -51,11 +51,13 @@ export const useScan = () => {
       if (response.ok) {
         setIsLoading(false);
         setScannedID(ticketID);
+        return ticketID;
       } else if (response.status === 401) {
         // Expired token, logged-out user will be redirected to login page
         dispatch({ type: 'LOGOUT' });
       } else {
         setError('An unknown error occurred. Please try again later.');
+        return;
       }
     } else if (ticketResponse.status === 401) {
       // Expired token, logged-out user will be redirected to login page
