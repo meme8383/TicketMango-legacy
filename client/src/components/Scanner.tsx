@@ -16,12 +16,11 @@ const Scanner = ({ event_id }: { event_id: string }) => {
     if (result) {
       if (isLoading) return;
       setTicketID(result.getText());
-      scan(event_id, result.getText())
-        .then((res) => {
-          if (res) {
-            setScannedList([res, ...scannedList]);
-          }
-        });
+      scan(event_id, result.getText()).then((res) => {
+        if (res) {
+          setScannedList([res, ...scannedList]);
+        }
+      });
     }
     if (error) {
       console.log(error);
@@ -29,14 +28,16 @@ const Scanner = ({ event_id }: { event_id: string }) => {
   };
 
   return (
-    <div>
+    <div style={{ maxWidth: '500px' }} className="justify-content-center">
       <QrReader
         onResult={handleScan}
         constraints={{ facingMode: 'environment' }}
         scanDelay={1000}
       />
       {isLoading ? (
-        <Alert variant={'warning'}><Spinner /></Alert>
+        <Alert variant={'warning'}>
+          <Spinner />
+        </Alert>
       ) : error ? (
         <Alert variant={'danger'}>{error}</Alert>
       ) : scannedID && scannedID === ticketID ? (
