@@ -22,6 +22,7 @@ import NewEvent from './pages/NewEvent';
 import Ticket from './pages/Ticket';
 import EventManager from './pages/EventManager';
 import EventScanner from './pages/EventScanner';
+import QRScanner from './pages/QRScanner';
 
 function App() {
   const { user, loading } = useAuthContext(); // get user
@@ -59,10 +60,18 @@ function App() {
                     path="edit"
                     element={user ? <EventManager /> : <Navigate to="/login" />}
                   />
-                  <Route
-                    path="scan"
-                    element={user ? <EventScanner /> : <Navigate to="/login" />}
-                  />
+                  <Route path="scan" element={<Outlet />}>
+                    <Route
+                      path=""
+                      element={
+                        user ? <EventScanner /> : <Navigate to="/login" />
+                      }
+                    />
+                    <Route
+                      path="camera"
+                      element={user ? <QRScanner /> : <Navigate to="/login" />}
+                    />
+                  </Route>
                 </Route>
               </Route>
               <Route
