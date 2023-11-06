@@ -20,7 +20,7 @@
     "express": "~4.16.1",
     "if-env": "^1.0.4",
     "jsonwebtoken": "^9.0.0",
-    "mongoose": "^7.1.0",
+    "mongoose": "^8.0.0",
     "morgan": "~1.9.1",
     "validator": "^13.9.0"
   },
